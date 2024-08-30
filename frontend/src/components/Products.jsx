@@ -1,16 +1,19 @@
 import React, { useEffect } from "react";
 import { Product } from "./Product";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchData } from "../redux/Products/action";
-
-export const Products = () => {
-  const products = useSelector((store) => store.ecommerceData.products);
-  const productStore = useSelector((store) => store.ecommerceData);
-  console.log("product store is", productStore);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchData());
-  }, [dispatch]);
+import {
+  fetchData,
+  fetchFilterSortPaginationData,
+} from "../redux/Products/action";
+import { limit } from "../assets/constants";
+export const Products = ({ products }) => {
+  // const products = useSelector((store) => store.ecommerceData.products);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(
+  //     fetchFilterSortPaginationData({}, {}, { _page: 1, _limit: limit })
+  //   );
+  // }, [dispatch]);
   return (
     <>
       {/* Product grid */}

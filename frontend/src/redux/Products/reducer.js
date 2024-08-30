@@ -2,6 +2,7 @@ import * as Types from "./actionTypes";
 
 const initState = {
   products: [],
+  totalCount: 0,
   loading: false,
   error: "",
 };
@@ -18,7 +19,8 @@ export const productReducer = (state = initState, action) => {
     case Types.FETCH_DATA_SUCCESS: {
       return {
         ...state,
-        products: payload,
+        products: payload.products,
+        totalCount: payload.totalCount,
         loading: false,
         error: "",
       };

@@ -30,6 +30,7 @@ export const fetchData = (payload) => {
     }) //--> Check index.js for remaining url or check package.json just after name at top you will found proxy
       .then((res) => {
         // console.log(res.data);
+
         dispatch(fetchDataSuccess(res.data));
       })
       .catch((err) => {
@@ -37,12 +38,30 @@ export const fetchData = (payload) => {
       });
   };
 };
-export const fetchFilterData = (payload) => {
+export const fetchFilterSortPaginationData = (filter, sort, pagination) => {
   //   console.log("payload is", payload);
+
+  //filter = {"category:["smartphone","laptops"]"}
+  //sort = {_sort:"price",_order="desc"}
+  //pagination = {_page=1&_limit=10}
   let queryString = "";
-  for (let key in payload) {
-    queryString = `${key}=${payload[key]}`;
+  for (let key in filter) {
+    const categoryValuesArray = filter[key];
+    if (categoryValuesArray.length > 0) {
+      const lastCategoryValue =
+        categoryValuesArray[categoryValuesArray.length - 1];
+      queryString += `${key}=${lastCategoryValue}&`;
+    }
   }
+
+  for (let key in sort) {
+    queryString += `${key}=${sort[key]}&`;
+  }
+  for (let key in pagination) {
+    queryString += `${key}=${pagination[key]}&`;
+  }
+
+  console.log("queryString", queryString);
 
   return (dispatch) => {
     dispatch(fetchDataRequest());
@@ -53,7 +72,11 @@ export const fetchFilterData = (payload) => {
     }) //--> Check index.js for remaining url or check package.json just after name at top you will found proxy
       .then((res) => {
         // console.log(res.data);
-        dispatch(fetchDataSuccess(res.data));
+        const totalCount = res.headers["x-total-count"];
+        // console.log("totalcount in sort is", totalCount);
+        dispatch(
+          fetchDataSuccess({ products: res.data, totalCount: +totalCount })
+        );
       })
       .catch((err) => {
         dispatch(fetchDataFailure(err.data));

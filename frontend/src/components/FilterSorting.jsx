@@ -21,8 +21,12 @@ import {
 } from "@heroicons/react/20/solid";
 import { Products } from "../components/Products";
 import { Pagination } from "./Pagination";
-import { useDispatch } from "react-redux";
-import { fetchFilterData } from "../redux/Products/action";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchData,
+  fetchFilterSortPaginationData,
+} from "../redux/Products/action";
+import { limit as ITEMS_PER_PAGE } from "../assets/constants.js";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -93,18 +97,48 @@ function classNames(...classes) {
 
 export const FilterSorting = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [filter, setFilter] = useState({});
-  console.log("filter", filter);
+  const [filter, setFilter] = useState(null);
+  const [sort, setSort] = useState(null);
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
+
+  const products = useSelector((store) => store.ecommerceData.products);
+  const totalItems = useSelector((store) => store.ecommerceData.totalCount);
+  // console.log("products is", products);
+  // console.log("total items from store is", totalItems);
+
+  const handlePage = (page) => {
+    setPage(page);
+  };
+
   const handleFilter = (e, section, option) => {
-    const newFilter = { ...filter, [section.id]: option.value };
+    const newFilter = { ...filter };
+    if (e.target.checked) {
+      if (newFilter[section.id]) {
+        newFilter[section.id].push(option.value);
+      } else {
+        newFilter[section.id] = [option.value];
+      }
+    } else {
+      const index = newFilter[section.id].findIndex(
+        (el) => el === option.value
+      );
+      console.log("newFilter", newFilter);
+      newFilter[section.id].splice(index, 1);
+    }
+
     setFilter(newFilter);
   };
-  const handleSort = (e, option) => {};
+  const handleSort = (e, option) => {
+    const sort = { _sort: option.sort, _order: option.order };
+    // console.log("sort", sort);
+    setSort(sort);
+  };
 
   useEffect(() => {
-    dispatch(fetchFilterData(filter));
-  }, [dispatch, filter]);
+    const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
+    dispatch(fetchFilterSortPaginationData(filter, sort, pagination));
+  }, [dispatch, filter, sort, page]);
 
   return (
     <div>
@@ -315,10 +349,14 @@ export const FilterSorting = () => {
               ))}
             </form>
 
-            <Products />
+            <Products products={products} />
           </div>
         </section>
-        <Pagination />
+        <Pagination
+          handlePage={handlePage}
+          page={page}
+          totalItems={totalItems}
+        />
       </main>
     </div>
   );
