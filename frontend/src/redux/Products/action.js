@@ -19,6 +19,19 @@ const fetchDataFailure = (payload) => {
   };
 };
 
+const fetchBrandSuccess = (payload) => {
+  return {
+    type: types.FETCH_BRANDS_SUCCESS,
+    payload,
+  };
+};
+const fetchCategoriesSuccess = (payload) => {
+  return {
+    type: types.FETCH_CATEGORIES_SUCCESS,
+    payload,
+  };
+};
+
 //fetching data request-->
 export const fetchData = (payload) => {
   return (dispatch) => {
@@ -80,6 +93,43 @@ export const fetchFilterSortPaginationData = (filter, sort, pagination) => {
       })
       .catch((err) => {
         dispatch(fetchDataFailure(err.data));
+      });
+  };
+};
+
+export const fetchBrands = (payload) => {
+  return (dispatch) => {
+    Axios.get("/brands", {
+      // params: {
+      //   ...payload,
+      // },
+    }) //--> Check index.js for remaining url or check package.json just after name at top you will found proxy
+      .then((res) => {
+        // console.log(res.data);
+
+        dispatch(fetchBrandSuccess(res.data));
+      })
+      .catch((err) => {
+        console.log(err.message);
+        // dispatch(fetchDataFailure(err.data));
+      });
+  };
+};
+export const fetchCategories = (payload) => {
+  return (dispatch) => {
+    Axios.get("/categories", {
+      // params: {
+      //   ...payload,
+      // },
+    }) //--> Check index.js for remaining url or check package.json just after name at top you will found proxy
+      .then((res) => {
+        // console.log(res.data);
+
+        dispatch(fetchCategoriesSuccess(res.data));
+      })
+      .catch((err) => {
+        console.log(err.message);
+        // dispatch(fetchDataFailure(err.data));
       });
   };
 };

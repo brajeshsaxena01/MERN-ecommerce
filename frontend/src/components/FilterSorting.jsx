@@ -23,6 +23,8 @@ import { Products } from "../components/Products";
 import { Pagination } from "./Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchBrands,
+  fetchCategories,
   fetchData,
   fetchFilterSortPaginationData,
 } from "../redux/Products/action";
@@ -32,63 +34,6 @@ const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
   { name: "Price: Low to High", sort: "price", order: "asc", current: false },
   { name: "Price: High to Low", sort: "price", order: "desc", current: false },
-];
-
-const filters = [
-  {
-    id: "brand",
-    name: "Brands",
-    options: [
-      { value: "Essence", label: "Essence", checked: false },
-      { value: "Glamour Beauty", label: "Glamour Beauty", checked: false },
-      { value: "Velvet Touch", label: "Velvet Touch", checked: false },
-      { value: "Chic Cosmetics", label: "Chic Cosmetics", checked: false },
-      { value: "Nail Couture", label: "Nail Couture", checked: false },
-      { value: "Calvin Klein", label: "Calvin Klein", checked: false },
-      { value: "Chanel", label: "Chanel", checked: false },
-      { value: "Dior", label: "Dior", checked: false },
-      { value: "Dolce & Gabbana", label: "Dolce & Gabbana", checked: false },
-      { value: "Gucci", label: "Gucci", checked: false },
-      { value: "Annibale Colombo", label: "Annibale Colombo", checked: false },
-      { value: "Furniture Co.", label: "Furniture Co.", checked: false },
-      { value: "Knoll", label: "Knoll", checked: false },
-      { value: "Bath Trends", label: "Bath Trends", checked: false },
-    ],
-  },
-  {
-    id: "color",
-    name: "Color",
-    options: [
-      { value: "white", label: "White", checked: false },
-      { value: "beige", label: "Beige", checked: false },
-      { value: "blue", label: "Blue", checked: true },
-      { value: "brown", label: "Brown", checked: false },
-      { value: "green", label: "Green", checked: false },
-      { value: "purple", label: "Purple", checked: false },
-    ],
-  },
-  {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "beauty", label: "Beauty", checked: false },
-      { value: "fragrances", label: "Fragrances", checked: false },
-      { value: "furniture", label: "Furniture", checked: true },
-      { value: "groceries", label: "Groceries", checked: false },
-    ],
-  },
-  {
-    id: "size",
-    name: "Size",
-    options: [
-      { value: "2l", label: "2L", checked: false },
-      { value: "6l", label: "6L", checked: false },
-      { value: "12l", label: "12L", checked: false },
-      { value: "18l", label: "18L", checked: false },
-      { value: "20l", label: "20L", checked: false },
-      { value: "40l", label: "40L", checked: true },
-    ],
-  },
 ];
 
 function classNames(...classes) {
@@ -103,10 +48,25 @@ export const FilterSorting = () => {
   const dispatch = useDispatch();
 
   const products = useSelector((store) => store.ecommerceData.products);
+  const brands = useSelector((store) => store.ecommerceData.brands);
+  const categories = useSelector((store) => store.ecommerceData.categories);
   const totalItems = useSelector((store) => store.ecommerceData.totalCount);
+  // console.log("brands and categories is", brands, categories);
   // console.log("products is", products);
   // console.log("total items from store is", totalItems);
 
+  const filters = [
+    {
+      id: "brand",
+      name: "Brands",
+      options: brands || [],
+    },
+    {
+      id: "category",
+      name: "Category",
+      options: categories || [],
+    },
+  ];
   const handlePage = (page) => {
     setPage(page);
   };
@@ -120,11 +80,14 @@ export const FilterSorting = () => {
         newFilter[section.id] = [option.value];
       }
     } else {
-      const index = newFilter[section.id].findIndex(
-        (el) => el === option.value
-      );
       console.log("newFilter", newFilter);
-      newFilter[section.id].splice(index, 1);
+      const length = Object.keys(newFilter).length;
+      if (length > 0) {
+        const index = newFilter[section.id].findIndex(
+          (el) => el === option.value
+        );
+        newFilter[section.id].splice(index, 1);
+      }
     }
 
     setFilter(newFilter);
@@ -139,6 +102,15 @@ export const FilterSorting = () => {
     const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
     dispatch(fetchFilterSortPaginationData(filter, sort, pagination));
   }, [dispatch, filter, sort, page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [sort]);
+
+  useEffect(() => {
+    dispatch(fetchBrands());
+    dispatch(fetchCategories());
+  }, []);
 
   return (
     <div>
