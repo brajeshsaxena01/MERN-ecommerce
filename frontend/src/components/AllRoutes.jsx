@@ -6,6 +6,7 @@ import { Signup } from "../pages/Signup";
 import { Cart } from "../pages/Cart";
 import { Checkout } from "../pages/Checkout";
 import { ProductDetails } from "../pages/ProductDetails";
+import { Protected } from "./Protected";
 
 export const AllRoutes = () => {
   return (
@@ -14,8 +15,22 @@ export const AllRoutes = () => {
       <Route path="/products" element={<ProductList />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/checkout" element={<Checkout />} />
+      <Route
+        path="/cart"
+        element={
+          <Protected>
+            <Cart />
+          </Protected>
+        }
+      />
+      <Route
+        path="/checkout"
+        element={
+          <Protected>
+            <Checkout />
+          </Protected>
+        }
+      />
       <Route path="/product-details/:id" element={<ProductDetails />} />
       {/* <Route
         path="/set-custom-claim"

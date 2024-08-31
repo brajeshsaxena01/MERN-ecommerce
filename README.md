@@ -16,6 +16,10 @@
 
 [json-server docs](https://www.npmjs.com/package/json-server/v/0.16.1#sort)
 
+[react-hook-form](https://react-hook-form.com/get-started#)
+
+[regex generator](https://regexr.com/)
+
 ```bash
 npx json-server data.json --port 5000
 ```

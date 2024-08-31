@@ -7,6 +7,7 @@ const initState = {
   custom_data: localStorage.getItem("custom_data")
     ? JSON.parse(localStorage.getItem("custom_data"))
     : null,
+  error: null,
 };
 
 export const authReducer = (state = initState, action) => {
@@ -22,6 +23,12 @@ export const authReducer = (state = initState, action) => {
       return {
         ...state,
         userInfo: payload,
+      };
+    }
+    case Types.USER_SIGNIN_FAILURE: {
+      return {
+        ...state,
+        error: payload,
       };
     }
     case Types.USER_SIGNOUT_SUCCESS: {
