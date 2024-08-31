@@ -16,7 +16,7 @@ export const AllRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/product-details" element={<ProductDetails />} />
+      <Route path="/product-details/:id" element={<ProductDetails />} />
       {/* <Route
         path="/set-custom-claim"
         element={is_admin ? <MakeAdmin /> : <NotAdmin />}

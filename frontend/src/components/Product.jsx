@@ -6,7 +6,7 @@ export const Product = (props) => {
   const { product } = props;
   return (
     <>
-      <Link to="/product-details">
+      <Link to={`/product-details/${product.id}`}>
         <div
           key={product.id}
           className="group relative border-solid border-2 p-2"

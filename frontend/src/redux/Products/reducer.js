@@ -5,6 +5,7 @@ const initState = {
   totalCount: 0,
   brands: "",
   categories: "",
+  selectedProduct: null,
   loading: false,
   error: "",
 };
@@ -46,6 +47,14 @@ export const productReducer = (state = initState, action) => {
       return {
         ...state,
         categories: payload,
+        loading: false,
+        error: "",
+      };
+    }
+    case Types.FETCH_PRODUCT_BY_ID_SUCCESS: {
+      return {
+        ...state,
+        selectedProduct: payload,
         loading: false,
         error: "",
       };

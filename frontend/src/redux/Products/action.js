@@ -31,6 +31,12 @@ const fetchCategoriesSuccess = (payload) => {
     payload,
   };
 };
+const fetchProductByIdSuccess = (payload) => {
+  return {
+    type: types.FETCH_PRODUCT_BY_ID_SUCCESS,
+    payload,
+  };
+};
 
 //fetching data request-->
 export const fetchData = (payload) => {
@@ -126,6 +132,24 @@ export const fetchCategories = (payload) => {
         // console.log(res.data);
 
         dispatch(fetchCategoriesSuccess(res.data));
+      })
+      .catch((err) => {
+        console.log(err.message);
+        // dispatch(fetchDataFailure(err.data));
+      });
+  };
+};
+export const fetchProductById = (id) => {
+  return (dispatch) => {
+    Axios.get(`/products/${id}`, {
+      // params: {
+      //   ...payload,
+      // },
+    }) //--> Check index.js for remaining url or check package.json just after name at top you will found proxy
+      .then((res) => {
+        // console.log(res.data);
+
+        dispatch(fetchProductByIdSuccess(res.data));
       })
       .catch((err) => {
         console.log(err.message);
