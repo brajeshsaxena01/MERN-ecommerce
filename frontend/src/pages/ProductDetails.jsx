@@ -27,6 +27,7 @@ import { Radio, RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchProductById } from "../redux/Products/action";
+import { addToCart } from "../redux/Cart/action";
 
 // const product = {
 //   name: "Basic Tee 6-Pack",
@@ -100,7 +101,12 @@ export const ProductDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const product = useSelector((store) => store.ecommerceData.selectedProduct);
-
+  const user = useSelector((store) => store.auth.userInfo);
+  const handleCart = (e) => {
+    e.preventDefault();
+    delete product["id"];
+    dispatch(addToCart({ ...product, quantity: 1, user: user.id }));
+  };
   useEffect(() => {
     dispatch(fetchProductById(params.id));
   }, [dispatch, params.id]);
@@ -323,6 +329,7 @@ export const ProductDetails = () => {
                 </div>
 
                 <button
+                  onClick={handleCart}
                   type="submit"
                   className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >

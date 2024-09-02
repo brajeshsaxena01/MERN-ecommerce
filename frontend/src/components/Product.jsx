@@ -1,16 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/24/outline";
+import { addToCart } from "../redux/Cart/action";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Product = (props) => {
   const { product } = props;
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store.auth.userInfo);
+
+  const handleCart = (product) => {
+    delete product["id"];
+    dispatch(addToCart({ ...product, quantity: 1, user: user.id }));
+  };
   return (
     <>
-      <Link to={`/product-details/${product.id}`}>
-        <div
-          key={product.id}
-          className="group relative border-solid border-2 p-2"
-        >
+      <div
+        key={product.id}
+        className="group relative border-solid border-2 p-2"
+      >
+        <Link to={`/product-details/${product.id}`}>
           <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
             <img
               alt={product.title}
@@ -43,8 +52,17 @@ export const Product = (props) => {
               </p>
             </div>
           </div>
-        </div>
-      </Link>
+        </Link>
+        {/* <button
+          onClick={() => {
+            handleCart(product);
+          }}
+          type="submit"
+          className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+          Add to cart
+        </button> */}
+      </div>
     </>
   );
 };

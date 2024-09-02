@@ -109,9 +109,7 @@ export const Pagination = ({ handlePage, page, totalItems }) => {
                 }}
                 aria-current="page"
                 className={`relative cursor cursor-pointer z-10 inline-flex items-center ${
-                  index + 1 === page
-                    ? "bg-indigo-600 text-white"
-                    : "text-gray-950"
+                  index + 1 === page ? "bg-indigo-600 text-white" : "text-black"
                 } px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
               >
                 {index + 1}
