@@ -44,7 +44,11 @@ export const Signup = () => {
             className="space-y-6"
             onSubmit={handleSubmit((data) => {
               dispatch(
-                userSignUp({ email: data.email, password: data.password })
+                userSignUp({
+                  email: data.email,
+                  password: data.password,
+                  addresses: [],
+                })
               );
               // console.log(data);
             })}

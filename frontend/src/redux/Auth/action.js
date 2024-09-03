@@ -25,6 +25,13 @@ const userSignOutSuccess = () => {
   };
 };
 
+const saveShipingAddressSuccess = (payload) => {
+  return {
+    type: Types.SAVE_SHIPPING_ADDRESS_SUCCESS,
+    payload,
+  };
+};
+
 //Create user data
 export const userSignUp = (payload) => (dispatch) => {
   let userData = payload;
@@ -46,7 +53,7 @@ export const userSignIn = (payload) => (dispatch) => {
   axios
     .get(`/users?email=${email}`)
     .then((res) => {
-      if (password == res.data[0].password) {
+      if (password === res.data[0].password) {
         dispatch(userSignInSuccess(res.data[0]));
         // console.log(res.data[0]);
       } else {
@@ -63,4 +70,20 @@ export const userSignIn = (payload) => (dispatch) => {
 export const userSignOut = () => (dispatch) => {
   console.log("in user-signout");
   dispatch(userSignOutSuccess());
+};
+
+export const saveShipingAddress = (payload) => (dispatch) => {
+  let updatedUserData = payload;
+  axios
+    .patch(`/users/${updatedUserData.id}`, updatedUserData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      dispatch(saveShipingAddressSuccess(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

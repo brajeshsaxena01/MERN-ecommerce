@@ -6,7 +6,9 @@ const initState = {
       ? JSON.parse(localStorage.getItem("cartData"))
       : [],
   },
-  // cart: [],
+  shippingAddress: localStorage.getItem("shippingAddress")
+    ? JSON.parse(localStorage.getItem("shippingAddress"))
+    : {},
   loading: false,
   error: "",
 };
@@ -103,6 +105,16 @@ export const cartReducer = (state = initState, action) => {
       return {
         ...state,
         cart: { ...state.cart, cartItems: cartData },
+        loading: false,
+        error: null,
+      };
+    }
+    case Types.CLEAR_CART_SUCCESS: {
+      return {
+        ...state,
+        cart: { ...state.cart, cartItems: payload },
+        loading: false,
+        error: null,
       };
     }
 

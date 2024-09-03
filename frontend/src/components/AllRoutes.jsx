@@ -7,6 +7,8 @@ import { Cart } from "../pages/Cart";
 import { Checkout } from "../pages/Checkout";
 import { ProductDetails } from "../pages/ProductDetails";
 import { Protected } from "./Protected";
+import { PageNotFound } from "../pages/PageNotFound";
+import { OrderSuccess } from "../pages/OrderSuccess";
 
 export const AllRoutes = () => {
   return (
@@ -36,6 +38,8 @@ export const AllRoutes = () => {
         path="/set-custom-claim"
         element={is_admin ? <MakeAdmin /> : <NotAdmin />}
       ></Route> */}
+      <Route path="/order-success/:id" element={<OrderSuccess />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

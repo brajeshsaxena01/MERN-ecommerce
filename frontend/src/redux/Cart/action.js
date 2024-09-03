@@ -44,6 +44,12 @@ const deleteItemInCartSuccess = (payload) => {
     payload,
   };
 };
+const clearCartSuccess = (payload) => {
+  return {
+    type: types.CLEAR_CART_SUCCESS,
+    payload,
+  };
+};
 
 //adding and fetching data -->
 
@@ -51,10 +57,10 @@ export const addToCart = (payload) => (dispatch) => {
   let item = payload;
 
   Axios.post("/cart", item)
-    .then(function (response) {
+    .then(function (res) {
       //item or response.data both are same
       // console.log("item in add to cart", item);
-      dispatch(addToCartSuccess(item));
+      dispatch(addToCartSuccess(res.data));
       // console.log(response);
     })
     .catch(function (error) {
@@ -102,12 +108,37 @@ export const updateCartItemQuantity = (payload) => (dispatch) => {
 export const deleteItemInCart = (payload) => (dispatch) => {
   let itemToDelete = payload;
 
-  Axios.delete(`/cart/${itemToDelete.id}`, itemToDelete, {})
+  Axios.delete(`/cart/${itemToDelete.id}`)
     .then(function (res) {
       dispatch(deleteItemInCartSuccess(itemToDelete));
       console.log("item deleted", res.data);
     })
     .catch(function (error) {
       console.log(error);
+    });
+};
+export const clearCart = (payload) => (dispatch) => {
+  let userId = payload;
+  console.log("user id", userId);
+  Axios.get(`/cart?user=${userId}`)
+    .then((res) => {
+      const items = res.data;
+
+      // console.log("item", items);
+      for (let i = 0; i < items.length; i++) {
+        Axios.delete(`/cart/${items[i].id}`)
+          .then(function (res) {
+            // console.log("item deleted", res.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+      console.log("cart cleared");
+
+      // dispatch(clearCartSuccess([]));
+    })
+    .catch((err) => {
+      console.log("err in fetch cart by userid", err);
     });
 };

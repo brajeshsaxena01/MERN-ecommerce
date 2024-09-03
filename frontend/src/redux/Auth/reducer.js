@@ -37,6 +37,12 @@ export const authReducer = (state = initState, action) => {
         userInfo: null,
       };
     }
+    case Types.SAVE_SHIPPING_ADDRESS_SUCCESS: {
+      return {
+        ...state,
+        userInfo: payload,
+      };
+    }
     default: {
       return state;
     }

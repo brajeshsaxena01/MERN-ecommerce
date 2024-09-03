@@ -3,7 +3,7 @@ import React, { useState, Fragment, useEffect } from "react";
 // import { increment, incrementAsync, selectCount } from "./cartSlice";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
@@ -35,7 +35,7 @@ export const Cart = () => {
     //   window.alert("The product is out of stock");
     //   return;
     // }
-
+    console.log("item", item);
     dispatch(updateCartItemQuantity({ ...item, quantity: quantity }));
   };
 
@@ -45,6 +45,7 @@ export const Cart = () => {
 
   return (
     <>
+      {!cartItems.length && <Navigate to="/" replace={true}></Navigate>}
       <div>
         <div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
