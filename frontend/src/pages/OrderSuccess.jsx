@@ -8,6 +8,8 @@ export const OrderSuccess = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.auth.userInfo);
+  const cartItems = useSelector((store) => store.cartItem.cart.cartItems);
+  console.log("cart items", cartItems);
   console.log(user);
   useEffect(() => {
     dispatch(clearCart(user.id));

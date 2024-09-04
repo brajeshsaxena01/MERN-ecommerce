@@ -31,6 +31,12 @@ const saveShipingAddressSuccess = (payload) => {
     payload,
   };
 };
+const updateUserDetailsSuccess = (payload) => {
+  return {
+    type: Types.UPDATE_USER_DETAILS_SUCCESS,
+    payload,
+  };
+};
 
 //Create user data
 export const userSignUp = (payload) => (dispatch) => {
@@ -55,7 +61,7 @@ export const userSignIn = (payload) => (dispatch) => {
     .then((res) => {
       if (password === res.data[0].password) {
         dispatch(userSignInSuccess(res.data[0]));
-        // console.log(res.data[0]);
+        console.log("data in user signin", res.data);
       } else {
         console.log({ message: "wrong credential" });
         dispatch(userSignInFailure({ message: "wrong credential" }));
@@ -82,6 +88,21 @@ export const saveShipingAddress = (payload) => (dispatch) => {
     })
     .then((res) => {
       dispatch(saveShipingAddressSuccess(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+export const updateUserDetails = (payload) => (dispatch) => {
+  let updatedUserData = payload;
+  axios
+    .patch(`/users/${updatedUserData.id}`, updatedUserData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      dispatch(updateUserDetailsSuccess(res.data));
     })
     .catch((err) => {
       console.log(err);

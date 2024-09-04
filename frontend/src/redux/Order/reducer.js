@@ -2,6 +2,7 @@ import * as Types from "./actionTypes";
 
 const initState = {
   orders: [],
+  // userDetails: [],
   currentOrder: null,
   loading: false,
   error: null,
@@ -23,6 +24,14 @@ export const orderReducer = (state = initState, action) => {
       return {
         ...state,
         currentOrder: null,
+        loading: false,
+        error: null,
+      };
+    }
+    case Types.FETCH_ORDER_BY_USER_ID_SUCCESS: {
+      return {
+        ...state,
+        orders: payload,
         loading: false,
         error: null,
       };

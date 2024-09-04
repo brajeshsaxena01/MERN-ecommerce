@@ -30,8 +30,8 @@ const navigation = [
   { name: "Reports", href: "#", current: false },
 ];
 const userNavigation = [
-  { name: "Your Profile", to: "/" },
-  { name: "Settings", to: "/" },
+  { name: "My Profile", to: "/profile" },
+  { name: "My Orders", to: "/orders" },
   { name: "Sign out", to: "/login" },
 ];
 

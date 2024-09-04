@@ -136,7 +136,7 @@ export const clearCart = (payload) => (dispatch) => {
       }
       console.log("cart cleared");
 
-      // dispatch(clearCartSuccess([]));
+      dispatch(clearCartSuccess([]));
     })
     .catch((err) => {
       console.log("err in fetch cart by userid", err);

@@ -112,7 +112,7 @@ export const cartReducer = (state = initState, action) => {
     case Types.CLEAR_CART_SUCCESS: {
       return {
         ...state,
-        cart: { ...state.cart, cartItems: payload },
+        cart: { ...state.cart, cartItems: [] },
         loading: false,
         error: null,
       };

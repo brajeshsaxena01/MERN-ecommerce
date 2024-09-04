@@ -14,6 +14,13 @@ const clearCurrentOrderSuccess = (payload) => {
   };
 };
 
+const fetchOrderByUserIdSuccess = (payload) => {
+  return {
+    type: Types.FETCH_ORDER_BY_USER_ID_SUCCESS,
+    payload,
+  };
+};
+
 //Create user data
 export const addOrder = (payload) => (dispatch) => {
   let order = payload;
@@ -29,4 +36,16 @@ export const addOrder = (payload) => (dispatch) => {
 };
 export const clearCurrentOrder = (payload) => (dispatch) => {
   dispatch(clearCurrentOrderSuccess());
+};
+
+export const fetchOrderByLoggedInUserId = (payload) => (dispatch) => {
+  let userId = payload;
+  axios
+    .get(`/orders/?user.id=${userId}`)
+    .then((res) => {
+      dispatch(fetchOrderByUserIdSuccess(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

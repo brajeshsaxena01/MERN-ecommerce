@@ -19,11 +19,14 @@ export const Checkout = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.auth.userInfo);
   const currentOrder = useSelector((store) => store.orderData.currentOrder);
+  console.log("current order", currentOrder);
   const cartItems = useSelector((store) => store.cartItem.cart.cartItems);
-  const totalAmount = cartItems?.reduce(
-    (sum, currentValue) => sum + currentValue.price * currentValue.quantity,
-    0
-  );
+  const totalAmount = cartItems
+    ?.reduce(
+      (sum, currentValue) => sum + currentValue.price * currentValue.quantity,
+      0
+    )
+    .toFixed(2);
   const totalItems = cartItems?.reduce((sum, currentValue) => {
     return sum + currentValue.quantity;
   }, 0);
@@ -453,7 +456,7 @@ export const Checkout = () => {
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flex justify-between my-2 text-base font-medium text-gray-900">
                   <p>Subtotal</p>
-                  <p>${totalAmount?.toFixed(2)}</p>
+                  <p>${totalAmount}</p>
                 </div>
                 <div className="flex justify-between my-2 text-base font-medium text-gray-900">
                   <p>Total Items in cart</p>

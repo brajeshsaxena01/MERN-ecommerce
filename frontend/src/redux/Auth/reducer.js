@@ -43,6 +43,12 @@ export const authReducer = (state = initState, action) => {
         userInfo: payload,
       };
     }
+    case Types.UPDATE_USER_DETAILS_SUCCESS: {
+      return {
+        ...state,
+        userInfo: payload,
+      };
+    }
     default: {
       return state;
     }
