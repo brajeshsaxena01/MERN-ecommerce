@@ -19,15 +19,16 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { Products } from "../components/Products";
-import { Pagination } from "./Pagination";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchBrands,
   fetchCategories,
   fetchProductBYFilterSortPagination,
-} from "../redux/Products/action";
-import { limit as ITEMS_PER_PAGE } from "../assets/constants.js";
+} from "../../redux/Products/action";
+import { limit as ITEMS_PER_PAGE } from "../../assets/constants.js";
+import { AdminProducts } from "./AdminProducts.jsx";
+import { Pagination } from "../Pagination.jsx";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -39,7 +40,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export const FilterSorting = () => {
+export const AdminFilterSorting = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filter, setFilter] = useState(null);
   const [sort, setSort] = useState(null);
@@ -100,7 +101,6 @@ export const FilterSorting = () => {
   useEffect(() => {
     const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
     dispatch(fetchProductBYFilterSortPagination(filter, sort, pagination));
-    //TODO: server will filter the deleted product
   }, [dispatch, filter, sort, page]);
 
   useEffect(() => {
@@ -321,7 +321,7 @@ export const FilterSorting = () => {
               ))}
             </form>
 
-            <Products products={products} />
+            <AdminProducts products={products} />
           </div>
         </section>
         <Pagination

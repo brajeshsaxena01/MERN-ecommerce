@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { saveShipingAddress, userSignIn } from "../redux/Auth/action";
 import { useState } from "react";
 import { addOrder } from "../redux/Order/action";
+import { discountedPrice } from "../assets/constants";
 
 export const Checkout = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -23,7 +24,8 @@ export const Checkout = () => {
   const cartItems = useSelector((store) => store.cartItem.cart.cartItems);
   const totalAmount = cartItems
     ?.reduce(
-      (sum, currentValue) => sum + currentValue.price * currentValue.quantity,
+      (sum, currentValue) =>
+        sum + discountedPrice(currentValue) * currentValue.quantity,
       0
     )
     .toFixed(2);
@@ -399,13 +401,13 @@ export const Checkout = () => {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <a href={product.href}>{product.name}</a>
+                                <p>{product.title}</p>
                               </h3>
-                              <p className="ml-4">{product.price}</p>
+                              <p className="ml-4">{discountedPrice(product)}</p>
                             </div>
-                            <p className="mt-1 text-sm text-gray-500">
+                            {/* <p className="mt-1 text-sm text-gray-500">
                               {product.color}
-                            </p>
+                            </p> */}
                           </div>
                           <div className="flex flex-1 items-end justify-between text-sm">
                             <div className=" flex items-center gap-3 mt-1">

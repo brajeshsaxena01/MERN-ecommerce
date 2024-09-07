@@ -19,6 +19,7 @@
 [react-hook-form](https://react-hook-form.com/get-started#)
 
 [regex generator](https://regexr.com/)
+[React loader spinner](https://mhnpd.github.io/react-loader-spinner/docs/components/color-ring)
 
 ```bash
 npx json-server data.json --port 5000

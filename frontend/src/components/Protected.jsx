@@ -7,10 +7,12 @@ export const Protected = ({ children }) => {
   //   console.log("user data", user);
   // This if statement will not work here because this is jsx file,
   // if you want to use like this make js file like Protected.js.
-  //   if (!user) {
-  //     console.log("inside if");
-  //     <Navigate to="/login"></Navigate>;
-  //   }
+//   if (!user) {
+//     <Navigate to="/login" replace={true}></Navigate>;
+//   }
+//   if (user && user.role !== "admin") {
+//     <Navigate to="/" replace={true}></Navigate>;
+//   }
   //   console.log("outside if");
   return <>{!user ? <Navigate to="/login" replace={true} /> : children}</>;
 };

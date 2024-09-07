@@ -59,6 +59,35 @@ export const productReducer = (state = initState, action) => {
         error: "",
       };
     }
+    case Types.CREATE_PRODUCT_SUCCESS: {
+      return {
+        ...state,
+        products: [...state.products, payload],
+        loading: false,
+        error: "",
+      };
+    }
+    case Types.UPDATE_PRODUCT_SUCCESS: {
+      const newItem = payload;
+      //.find() method will return the product that matches the id else it return undefined
+      const isItemPresentInTheProduts = state?.products.find(
+        (x) => x.id === newItem.id
+      );
+      // console.log('inCartReducer', isItemPresentInTheCart);
+
+      const productsData = isItemPresentInTheProduts
+        ? state.products.map((prod) =>
+            prod.id === isItemPresentInTheProduts.id ? newItem : prod
+          )
+        : [...state.products, newItem];
+      return {
+        ...state,
+        products: productsData,
+        selectedProduct: newItem,
+        loading: false,
+        error: "",
+      };
+    }
     default: {
       return state;
     }

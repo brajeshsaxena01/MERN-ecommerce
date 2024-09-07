@@ -11,14 +11,64 @@ import { PageNotFound } from "../pages/PageNotFound";
 import { OrderSuccess } from "../pages/OrderSuccess";
 import { MyOrders } from "../pages/MyOrders";
 import { MyProfile } from "../pages/MyProfile";
+import { LogOut } from "./LogOut";
+import { ForgotPassword } from "../pages/ForgotPassword";
+import { AdminProtected } from "./AdminProtected";
+import { AdminProductList } from "../pages/Admin/AdminProductList";
+import { AdminProductDetails } from "../pages/Admin/AdminProductDetails";
+import { AdminProductForm } from "../pages/Admin/AdminProductForm";
+import { AdminOrder } from "../pages/Admin/AdminOrder";
 
 export const AllRoutes = () => {
   return (
     <Routes>
+      <Route
+        path="/admin"
+        element={
+          <AdminProtected>
+            <AdminProductList />
+          </AdminProtected>
+        }
+      />
+      <Route
+        path="/admin/product-details/:id"
+        element={
+          <AdminProtected>
+            <AdminProductDetails />
+          </AdminProtected>
+        }
+      />
+      <Route
+        path="/admin/product-form"
+        element={
+          <AdminProtected>
+            <AdminProductForm />
+          </AdminProtected>
+        }
+      />
+      <Route
+        path="/admin/product-form/edit/:id"
+        element={
+          <AdminProtected>
+            <AdminProductForm />
+          </AdminProtected>
+        }
+      />
+      <Route
+        path="/admin/orderS"
+        element={
+          <AdminProtected>
+            <AdminOrder />
+          </AdminProtected>
+        }
+      />
+
       <Route path="/" element={<ProductList />} />
       <Route path="/products" element={<ProductList />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/logout" element={<LogOut />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route
         path="/cart"
         element={

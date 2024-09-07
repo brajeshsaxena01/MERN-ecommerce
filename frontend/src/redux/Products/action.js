@@ -37,6 +37,18 @@ const fetchProductByIdSuccess = (payload) => {
     payload,
   };
 };
+const createProductSuccess = (payload) => {
+  return {
+    type: types.CREATE_PRODUCT_SUCCESS,
+    payload,
+  };
+};
+const updateProductSuccess = (payload) => {
+  return {
+    type: types.UPDATE_PRODUCT_SUCCESS,
+    payload,
+  };
+};
 
 //fetching data request-->
 export const fetchData = (payload) => {
@@ -57,12 +69,19 @@ export const fetchData = (payload) => {
       });
   };
 };
-export const fetchFilterSortPaginationData = (filter, sort, pagination) => {
+export const fetchProductBYFilterSortPagination = (
+  filter,
+  sort,
+  pagination
+) => {
   //   console.log("payload is", payload);
 
   //filter = {"category:["smartphone","laptops"]"}
   //sort = {_sort:"price",_order="desc"}
   //pagination = {_page=1&_limit=10}
+
+  //TODO: server will filter the deleted product in for non admin
+
   let queryString = "";
   for (let key in filter) {
     const categoryValuesArray = filter[key];
@@ -156,4 +175,27 @@ export const fetchProductById = (id) => {
         // dispatch(fetchDataFailure(err.data));
       });
   };
+};
+
+export const createProduct = (payload) => (dispatch) => {
+  let product = payload;
+  Axios.post("/products", product)
+    .then(function (res) {
+      dispatch(createProductSuccess(res.data));
+      console.log(res.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+export const updateProduct = (payload) => (dispatch) => {
+  let product = payload;
+  Axios.patch(`/products/${product.id}`, product)
+    .then(function (res) {
+      dispatch(updateProductSuccess(res.data));
+      console.log(res.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 };

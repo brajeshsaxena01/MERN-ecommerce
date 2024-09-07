@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrderByLoggedInUserId } from "../redux/Order/action";
+import { discountedPrice } from "../assets/constants";
 
 export const MyOrders = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.auth.userInfo);
   const orders = useSelector((store) => store.orderData.orders);
+  console.log(orders);
 
   useEffect(() => {
     dispatch(fetchOrderByLoggedInUserId(user.id));
@@ -42,7 +44,9 @@ export const MyOrders = () => {
                               <h3>
                                 <a href={product.href}>{product.title}</a>
                               </h3>
-                              <p className="ml-4">${product.price}</p>
+                              <p className="ml-4">
+                                ${discountedPrice(product)}
+                              </p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
                               {product.brand}
@@ -86,22 +90,22 @@ export const MyOrders = () => {
                   <div className="flex gap-x-4">
                     <div className="min-w-0 flex-auto">
                       <p className="text-sm font-semibold leading-6 text-gray-900">
-                        {order.selectedAddress.name}
+                        {order?.selectedAddress?.name}
                       </p>
                       <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                        {order.selectedAddress.street}
+                        {order?.selectedAddress?.street}
                       </p>
                       <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                        {order.selectedAddress.pinCode}
+                        {order?.selectedAddress?.pinCode}
                       </p>
                     </div>
                   </div>
                   <div className="hidden sm:flex sm:flex-col sm:items-end">
                     <p className="text-sm leading-6 text-gray-900">
-                      Phone: {order.selectedAddress.phone}
+                      Phone: {order?.selectedAddress?.phone}
                     </p>
                     <p className="text-sm leading-6 text-gray-500">
-                      {order.selectedAddress.city}
+                      {order?.selectedAddress?.city}
                     </p>
                   </div>
                 </div>

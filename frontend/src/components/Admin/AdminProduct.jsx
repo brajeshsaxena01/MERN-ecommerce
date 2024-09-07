@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/24/outline";
-import { addToCart } from "../redux/Cart/action";
 import { useDispatch, useSelector } from "react-redux";
-import { discountedPrice } from "../assets/constants";
+import { addToCart } from "../../redux/Cart/action";
+import { discountedPrice } from "../../assets/constants";
 
-export const Product = (props) => {
+export const AdminProduct = (props) => {
   const { product } = props;
   const dispatch = useDispatch();
   const user = useSelector((store) => store.auth.userInfo);
@@ -20,7 +20,7 @@ export const Product = (props) => {
         key={product.id}
         className="group relative border-solid border-2 p-2"
       >
-        <Link to={`/product-details/${product.id}`}>
+        <Link to={`/admin/product-details/${product.id}`}>
           <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
             <img
               alt={product.title}
@@ -55,7 +55,7 @@ export const Product = (props) => {
               <p className="text-sm text-red-400">product deleted</p>
             </div>
           )}
-          {product.stock <= 0 && (
+          {product.stock<=0 && (
             <div>
               <p className="text-sm text-red-400">Out Of Stock</p>
             </div>

@@ -48,6 +48,8 @@ export const Signup = () => {
                   email: data.email,
                   password: data.password,
                   addresses: [],
+                  role: "user",
+                  //TODO: This role can be given on backend
                 })
               );
               // console.log(data);

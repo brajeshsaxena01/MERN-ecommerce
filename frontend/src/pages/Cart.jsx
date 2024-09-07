@@ -10,14 +10,20 @@ import {
   deleteItemInCart,
   updateCartItemQuantity,
 } from "../redux/Cart/action";
+import { discountedPrice } from "../assets/constants";
+import { Modal } from "../components/Modal";
 
 export const Cart = () => {
   const [open, setOpen] = useState(true);
+  const [openModal, setOpenModal] = useState(-1);
   const dispatch = useDispatch();
   const cartItems = useSelector((store) => store.cartItem.cart.cartItems);
+  const selectedProduct = useSelector(
+    (store) => store.ecommerceData.selectedProduct
+  );
   // console.log("cartItems", cartItems);
   const totalAmount = cartItems?.reduce(
-    (sum, currentValue) => sum + currentValue.price * currentValue.quantity,
+    (sum, item) => sum + discountedPrice(item) * item.quantity,
     0
   );
   const totalItems = cartItems?.reduce((sum, currentValue) => {
@@ -30,12 +36,15 @@ export const Cart = () => {
     // console.log('cart_item', item, quantity);
 
     // Check before adding to the cart the product is in stock or not
-    // const itemInStock = await axios.get(`/api/products/${item._id}`);
-    // if (itemInStock.data.inStock < quantity) {
-    //   window.alert("The product is out of stock");
-    //   return;
-    // }
-    console.log("item", item);
+    if (selectedProduct.stock < quantity) {
+      window.alert("The product is out of stock");
+      return;
+    }
+    if (quantity < 0) {
+      window.alert("The quantity can't be less than zero.");
+      return;
+    }
+    // console.log("item", item);
     dispatch(updateCartItemQuantity({ ...item, quantity: quantity }));
   };
 
@@ -46,6 +55,7 @@ export const Cart = () => {
   return (
     <>
       {!cartItems.length && <Navigate to="/" replace={true}></Navigate>}
+
       <div>
         <div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
@@ -70,7 +80,7 @@ export const Cart = () => {
                           <h3>
                             <a href={product.href}>{product.title}</a>
                           </h3>
-                          <p className="ml-4">${product.price}</p>
+                          <p className="ml-4">${discountedPrice(product)}</p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
                           {product.brand}
@@ -113,9 +123,22 @@ export const Cart = () => {
                         </div>
 
                         <div className="flex">
+                          <Modal
+                            title={`Delete ${product.title}`}
+                            message="Are you sure, you want to delete this item in the cart?"
+                            dangerOption="Delete"
+                            cancelOption="Cancel"
+                            cancelAction={() => {
+                              setOpenModal(-1);
+                            }}
+                            dangerAction={(e) => {
+                              handleRemove(product);
+                            }}
+                            showModal={openModal === product.id}
+                          ></Modal>
                           <button
                             onClick={() => {
-                              handleRemove(product);
+                              setOpenModal(product.id);
                             }}
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"

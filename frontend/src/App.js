@@ -3,6 +3,7 @@ import { AllRoutes } from "./components/AllRoutes";
 import { Navbar } from "./components/Navbar";
 import { useEffect } from "react";
 import { fetchCartItemByUserId } from "./redux/Cart/action";
+import { Footer } from "./components/Admin/Footer";
 
 function App() {
   //to show the data in the cart as user logged in
@@ -21,6 +22,7 @@ function App() {
         {/* <ProductList /> */}
         <AllRoutes />
       </Navbar>
+      <Footer />
     </>
   );
 }
