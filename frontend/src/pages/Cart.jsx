@@ -36,7 +36,7 @@ export const Cart = () => {
     // console.log('cart_item', item, quantity);
 
     // Check before adding to the cart the product is in stock or not
-    if (selectedProduct.stock < quantity) {
+    if (selectedProduct?.stock < quantity) {
       window.alert("The product is out of stock");
       return;
     }
