@@ -61,7 +61,7 @@ export const addToCart = (payload) => (dispatch) => {
       //item or response.data both are same
       // console.log("item in add to cart", item);
       dispatch(addToCartSuccess(res.data));
-      // console.log(response);
+      console.log("added cart item", res.data);
     })
     .catch(function (error) {
       dispatch(addToCartFailure(error));

@@ -53,7 +53,7 @@ export const clearCurrentOrder = (payload) => (dispatch) => {
 export const fetchOrderByLoggedInUserId = (payload) => (dispatch) => {
   let userId = payload;
   axios
-    .get(`/orders/?user.id=${userId}`)
+    .get(`/orders/user/${userId}`)
     .then((res) => {
       dispatch(fetchOrderByUserIdSuccess(res.data));
     })
@@ -71,6 +71,7 @@ export const fetchAllOrders =
     for (let key in pagination) {
       queryString += `${key}=${pagination[key]}&`;
     }
+   
     axios
       .get(`/orders?${queryString}`)
       .then((res) => {

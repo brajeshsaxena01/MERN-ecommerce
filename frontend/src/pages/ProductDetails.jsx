@@ -108,14 +108,12 @@ export const ProductDetails = () => {
   const handleCart = (e) => {
     e.preventDefault();
     // If not match the id it will return -1 else return index
-    if (products.findIndex((item) => item.productId === product.id) < 0) {
+    if (products.findIndex((item) => item.product.id === product.id) < 0) {
       const newProduct = {
-        ...product,
-        productId: product.id,
+        product: product.id,
         quantity: 1,
         user: user.id,
       };
-      delete newProduct["id"];
       console.log(product, newProduct);
       dispatch(addToCart(newProduct));
     } else {

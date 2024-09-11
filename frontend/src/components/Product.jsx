@@ -10,8 +10,6 @@ export const Product = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.auth.userInfo);
 
-  console.log("product", product);
-
   // const handleCart = (product) => {
   //   delete product["id"];
   //   dispatch(addToCart({ ...product, quantity: 1, user: user.id }));

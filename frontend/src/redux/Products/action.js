@@ -69,11 +69,12 @@ export const fetchData = (payload) => {
       });
   };
 };
-export const fetchProductBYFilterSortPagination = (
+export const fetchProductBYFilterSortPagination = ({
   filter,
   sort,
-  pagination
-) => {
+  pagination,
+  admin,
+}) => {
   //   console.log("payload is", payload);
 
   //filter = {"category:["smartphone","laptops"]"}
@@ -98,8 +99,10 @@ export const fetchProductBYFilterSortPagination = (
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
-
-  console.log("queryString", queryString);
+  if (admin) {
+    queryString += "admin=true";
+  }
+  // console.log("queryString", queryString);
 
   return (dispatch) => {
     dispatch(fetchDataRequest());

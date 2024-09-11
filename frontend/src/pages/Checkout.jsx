@@ -25,7 +25,7 @@ export const Checkout = () => {
   const totalAmount = cartItems
     ?.reduce(
       (sum, currentValue) =>
-        sum + discountedPrice(currentValue) * currentValue.quantity,
+        sum + discountedPrice(currentValue.product) * currentValue.quantity,
       0
     )
     .toFixed(2);
@@ -43,7 +43,7 @@ export const Checkout = () => {
     //   return;
     // }
 
-    dispatch(updateCartItemQuantity({ ...item, quantity: quantity }));
+    dispatch(updateCartItemQuantity({ id: item.id, quantity: quantity }));
   };
   const handleRemove = (itemToRemove) => {
     dispatch(deleteItemInCart(itemToRemove));
@@ -61,10 +61,10 @@ export const Checkout = () => {
 
   const handleOrder = (e) => {
     const order = {
-      cartItems,
+      items: cartItems,
       totalAmount,
       totalItems,
-      user,
+      user: user.id,
       paymentMethod,
       selectedAddress,
       status: "pending", //other status can be delivered, received
@@ -290,7 +290,7 @@ export const Checkout = () => {
                     Choose from Existing addresses
                   </p>
                   <ul role="list">
-                    {user?.addresses.map((address, indx) => (
+                    {user?.addresses?.map((address, indx) => (
                       <li
                         key={indx}
                         className="flex justify-between gap-x-6 px-5 py-5 border-solid border-2 border-gray-200"
@@ -387,12 +387,12 @@ export const Checkout = () => {
                 </h1>
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
-                    {cartItems.map((product) => (
-                      <li key={product.id} className="flex py-6">
+                    {cartItems.map((item, indx) => (
+                      <li key={indx} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
-                            src={product.thumbnail}
-                            alt={product.title}
+                            src={item.product.thumbnail}
+                            alt={item.product.title}
                             className="h-full w-full object-cover object-center"
                           />
                         </div>
@@ -401,9 +401,11 @@ export const Checkout = () => {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <p>{product.title}</p>
+                                <p>{item.product.title}</p>
                               </h3>
-                              <p className="ml-4">{discountedPrice(product)}</p>
+                              <p className="ml-4">
+                                {discountedPrice(item.product)}
+                              </p>
                             </div>
                             {/* <p className="mt-1 text-sm text-gray-500">
                               {product.color}
@@ -414,22 +416,16 @@ export const Checkout = () => {
                               <button
                                 className="border border-red-600 text-red-600 hover:bg-red-600 hover:text-white w-6 h-6 flex justify-center items-center rounded "
                                 onClick={() =>
-                                  addQuantityToCart(
-                                    product,
-                                    product.quantity - 1
-                                  )
+                                  addQuantityToCart(item, item.quantity - 1)
                                 }
                               >
                                 -
                               </button>
-                              <span>{product?.quantity}</span>
+                              <span>{item?.quantity}</span>
                               <button
                                 className="border border-red-600 text-red-600 hover:bg-red-600 hover:text-white w-6 h-6 flex justify-center items-center rounded "
                                 onClick={() =>
-                                  addQuantityToCart(
-                                    product,
-                                    product.quantity + 1
-                                  )
+                                  addQuantityToCart(item, item.quantity + 1)
                                 }
                               >
                                 +
@@ -439,7 +435,7 @@ export const Checkout = () => {
                             <div className="flex">
                               <button
                                 onClick={() => {
-                                  handleRemove(product);
+                                  handleRemove(item);
                                 }}
                                 type="button"
                                 className="font-medium text-indigo-600 hover:text-indigo-500"

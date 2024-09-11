@@ -12,14 +12,12 @@ function App() {
   console.log("user", user);
   useEffect(() => {
     if (user) {
-      console.log("inside if");
       dispatch(fetchCartItemByUserId(user.id));
     }
   }, [dispatch, user]);
   return (
     <>
       <Navbar>
-        {/* <ProductList /> */}
         <AllRoutes />
       </Navbar>
       <Footer />

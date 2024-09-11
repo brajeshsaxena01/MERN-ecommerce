@@ -15,17 +15,17 @@ const categorySchema = new mongoose.Schema(
 // To return _id as id during getting all the products or during creating one
 //start
 
-const virtual = categorySchema.virtual("id");
-virtual.get(function () {
-  return this._id;
-});
+// const virtual = categorySchema.virtual("id");
+// virtual.get(function () {
+//   return this._id;
+// });
 
-categorySchema.set("toJSON", {
-  virtuals: true,
-  transform: function (doc, ret) {
-    delete ret._id;
-  },
-});
+// categorySchema.set("toJSON", {
+//   virtuals: true,
+//   transform: function (doc, ret) {
+//     delete ret._id;
+//   },
+// });
 
 //end
 

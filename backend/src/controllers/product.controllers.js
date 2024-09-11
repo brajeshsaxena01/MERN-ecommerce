@@ -7,8 +7,15 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     // let query = await Product.find({}).lean().exec();
-    let query = Product.find({});
-    let totalProductsQuery = Product.find({});
+    let query = null;
+    let totalProductsQuery = null;
+    if (req.query.admin) {
+      query = Product.find({});
+      totalProductsQuery = Product.find({});
+    } else {
+      query = Product.find({ deleted: { $ne: true } });
+      totalProductsQuery = Product.find({ deleted: { $ne: true } });
+    }
     if (req.query.category) {
       query = query.find({ category: req.query.category });
       totalProductsQuery = totalProductsQuery.find({
@@ -35,7 +42,9 @@ router.get("/", async (req, res) => {
       query = query.skip((page - 1) * pageSize).limit(pageSize);
     }
     // const products = query;
-    const products = await query.lean().exec();
+    // const products = await query.lean().exec();// the lean is used convert the mongoose docs into json, but in model we already conveted to json during modification of _id as id, so only use exec to fulfill the promise and don't use lean it will conflict and return as _id
+
+    const products = await query.exec();
 
     // Setting this headers to the response beacuse we use this totalProducts as totalCount in frontend
     // In product=> action.js
@@ -49,19 +58,26 @@ router.get("/", async (req, res) => {
 
 router.post("/", crudControllers.post(Product));
 
-router.get("/:id", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    return res.status(200).send(product);
-  } catch (error) {
-    return res.status(500).send({ message: error.message });
-  }
-});
+router.get(
+  "/:id",
+  crudControllers.fetchById(Product)
+  //   async (req, res) => {
+  //   try {
+  //     const product = await Product.findById(req.params.id);
+  //     return res.status(200).send(product);
+  //   } catch (error) {
+  //     return res.status(500).send({ message: error.message });
+  //   }
+  // }
+);
 router.patch("/:id", async (req, res) => {
   try {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-    });
+    })
+      // .lean() // the lean is used convert the mongoose docs into json, but in model we already conveted to json during modification of _id as id, so only use exec to fulfill the promise and don't use lean it will conflict and return as _id
+
+      .exec();
 
     return res.status(200).send(product);
   } catch (error) {

@@ -7,7 +7,7 @@ export const MyOrders = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.auth.userInfo);
   const orders = useSelector((store) => store.orderData.orders);
-  console.log(orders);
+  console.log("orders", orders);
 
   useEffect(() => {
     dispatch(fetchOrderByLoggedInUserId(user.id));
@@ -28,12 +28,12 @@ export const MyOrders = () => {
                 </h3>
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
-                    {order.cartItems?.map((product) => (
-                      <li key={product.id} className="flex py-6">
+                    {order.items?.map((item, indx) => (
+                      <li key={indx} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
-                            src={product.thumbnail}
-                            alt={product.title}
+                            src={item.product?.thumbnail}
+                            alt={item.product?.title}
                             className="h-full w-full object-cover object-center"
                           />
                         </div>
@@ -42,17 +42,21 @@ export const MyOrders = () => {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <a href={product.href}>{product.title}</a>
+                                <a href={item.product?.id}>
+                                  {item.product?.title}
+                                </a>
                               </h3>
-                              <p className="ml-4">
-                                ${discountedPrice(product)}
-                              </p>
+                              {item.product && (
+                                <p className="ml-4">
+                                  ${discountedPrice(item?.product)}
+                                </p>
+                              )}
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
-                              {product.brand}
+                              {item.product?.brand}
                             </p>
                             <p className="mt-1 text-sm text-gray-500">
-                              ${product.price}
+                              ${item.product?.price}
                             </p>
                           </div>
                           <div className="flex flex-1 items-end justify-between text-sm">
@@ -61,7 +65,7 @@ export const MyOrders = () => {
                                 htmlFor="quantity"
                                 className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
                               >
-                                Qty:{product?.quantity}
+                                Qty:{item?.quantity}
                               </label>
                             </div>
 

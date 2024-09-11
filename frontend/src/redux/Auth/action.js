@@ -42,7 +42,7 @@ const updateUserDetailsSuccess = (payload) => {
 export const userSignUp = (payload) => (dispatch) => {
   let userData = payload;
   axios
-    .post("/users", userData)
+    .post("/users/signup", userData)
     .then(function (response) {
       dispatch(userSignUpSuccess(response.data));
       // console.log(response);
@@ -55,21 +55,17 @@ export const userSignUp = (payload) => (dispatch) => {
 //Fetch user data
 export const userSignIn = (payload) => (dispatch) => {
   const { email, password } = payload;
+  const loginInfo = payload;
   // console.log(payload);
   axios
-    .get(`/users?email=${email}`)
+    .post("/users/signin", { email, password })
     .then((res) => {
-      if (password === res.data[0].password) {
-        dispatch(userSignInSuccess(res.data[0]));
-        console.log("data in user signin", res.data);
-      } else {
-        console.log({ message: "wrong credential" });
-        dispatch(userSignInFailure({ message: "wrong credential" }));
-      }
+      console.log(res.data);
+      dispatch(userSignInSuccess(res.data));
     })
     .catch((err) => {
-      dispatch(userSignInFailure(err));
-      console.log(err);
+      dispatch(userSignInFailure({ message: err.message }));
+      console.log("message", err.message);
     });
 };
 

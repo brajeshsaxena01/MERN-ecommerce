@@ -42,7 +42,7 @@ export const ProductForm = () => {
   useEffect(() => {
     dispatch(fetchProductById(params.id));
   }, [params.id, dispatch]);
-  console.log("selectedProduct", selectedProduct);
+  // console.log("selectedProduct", selectedProduct);
   useEffect(() => {
     if (selectedProduct && params.id) {
       setValue("title", selectedProduct.title);

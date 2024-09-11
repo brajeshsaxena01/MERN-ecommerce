@@ -15,17 +15,17 @@ const brandSchema = new mongoose.Schema(
 // To return _id as id during getting all the products or during creating one
 //start
 
-const virtual = brandSchema.virtual("id");
-virtual.get(function () {
-  return this._id;
-});
+// const virtual = brandSchema.virtual("id");
+// virtual.get(function () {
+//   return this._id;
+// });
 
-brandSchema.set("toJSON", {
-  virtuals: true,
-  transform: function (doc, ret) {
-    delete ret._id;
-  },
-});
+// brandSchema.set("toJSON", {
+//   virtuals: true,
+//   transform: function (doc, ret) {
+//     delete ret._id;
+//   },
+// });
 
 //end
 

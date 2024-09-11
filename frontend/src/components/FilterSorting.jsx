@@ -99,7 +99,7 @@ export const FilterSorting = () => {
 
   useEffect(() => {
     const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
-    dispatch(fetchProductBYFilterSortPagination(filter, sort, pagination));
+    dispatch(fetchProductBYFilterSortPagination({ filter, sort, pagination }));
     //TODO: server will filter the deleted product
   }, [dispatch, filter, sort, page]);
 

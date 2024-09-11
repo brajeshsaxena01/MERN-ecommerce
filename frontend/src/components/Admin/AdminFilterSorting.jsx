@@ -100,7 +100,14 @@ export const AdminFilterSorting = () => {
 
   useEffect(() => {
     const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
-    dispatch(fetchProductBYFilterSortPagination(filter, sort, pagination));
+    dispatch(
+      fetchProductBYFilterSortPagination({
+        filter,
+        sort,
+        pagination,
+        admin: true,
+      })
+    );
   }, [dispatch, filter, sort, page]);
 
   useEffect(() => {

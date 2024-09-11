@@ -9,6 +9,7 @@ export const MyProfile = () => {
   const [selectedEditIndex, setSelectedEditIndex] = useState(-1);
   const [showAddressForm, setShowAddressForm] = useState(false);
   const user = useSelector((store) => store.auth.userInfo);
+  console.log("user", user);
   const dispatch = useDispatch();
 
   const {
@@ -35,7 +36,7 @@ export const MyProfile = () => {
     // setValue("pinCode", "");
     // setValue("phone", "");
     // setValue("street", "");
-    reset();//to clear the all set values so that if add new address form open then all field should be empty.
+    reset(); //to clear the all set values so that if add new address form open then all field should be empty.
   };
 
   const handleEditForm = (index) => {
@@ -101,8 +102,8 @@ export const MyProfile = () => {
               />
             ) : null}
             <p className="mt-0.5 text-sm text-gray-500"> Your Addresses :</p>
-            {user.addresses.map((address, indx) => (
-              <div>
+            {user.addresses?.map((address, indx) => (
+              <div key={indx}>
                 {selectedEditIndex === indx ? (
                   <EditAddressForm
                     handleSubmit={handleSubmit}
@@ -114,10 +115,7 @@ export const MyProfile = () => {
                   />
                 ) : null}
 
-                <div
-                  key={indx}
-                  className="flex justify-between gap-x-6 px-5 py-5 border-solid border-2 border-gray-200"
-                >
+                <div className="flex justify-between gap-x-6 px-5 py-5 border-solid border-2 border-gray-200">
                   <div className="flex gap-x-4">
                     <div className="min-w-0 flex-auto">
                       <p className="text-sm font-semibold leading-6 text-gray-900">
