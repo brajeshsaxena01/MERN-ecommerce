@@ -1,10 +1,14 @@
 const express = require("express");
 const Product = require("../models/product.models");
 const crudControllers = require("./crud.controllers");
+const authenticate = require("../middlewares/authenticate");
+const authorise = require("../middlewares/authorise");
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
+  // Imp line otherwise if somoeone get the token they can create a product using postman
+  // req.body.user_id=req.user.id // it should be in post req
   try {
     // let query = await Product.find({}).lean().exec();
     let query = null;
@@ -56,7 +60,12 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", crudControllers.post(Product));
+router.post(
+  "/",
+  authenticate,
+  authorise(["admin", "seller"]),
+  crudControllers.post(Product)
+);
 
 router.get(
   "/:id",
@@ -70,19 +79,24 @@ router.get(
   //   }
   // }
 );
-router.patch("/:id", async (req, res) => {
-  try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
-      // .lean() // the lean is used convert the mongoose docs into json, but in model we already conveted to json during modification of _id as id, so only use exec to fulfill the promise and don't use lean it will conflict and return as _id
+router.patch(
+  "/:id",
+  authenticate,
+  authorise(["admin", "seller"]),
+  async (req, res) => {
+    try {
+      const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      })
+        // .lean() // the lean is used convert the mongoose docs into json, but in model we already conveted to json during modification of _id as id, so only use exec to fulfill the promise and don't use lean it will conflict and return as _id
 
-      .exec();
+        .exec();
 
-    return res.status(200).send(product);
-  } catch (error) {
-    return res.status(500).send({ message: error.message });
+      return res.status(200).send(product);
+    } catch (error) {
+      return res.status(500).send({ message: error.message });
+    }
   }
-});
+);
 
 module.exports = router;

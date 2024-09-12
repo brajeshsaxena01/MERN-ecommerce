@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.get("", async (req, res) => {
   try {
-    const { user } = req.query;
-    const userId = user;
+    // const { user } = req.query;
+    const userId = req.user.id;
     const cartItems = await Cart.find({ user: userId })
       .populate("user") //the "user" is that you mention in the schema as a key not as ref
       .populate("product") //the "product" is that you mention in the schema as a key not as ref
@@ -22,8 +22,9 @@ router.get("", async (req, res) => {
 
 router.post("", async (req, res) => {
   //   console.log(req.body);
+  const userId = req.user.id;
   try {
-    const cartItem = await Cart.create(req.body);
+    const cartItem = await Cart.create({ ...req.body, user: userId });
     const populatedCartItem = await cartItem.populate("product");
     return res.status(201).send(populatedCartItem);
   } catch (error) {
@@ -45,9 +46,10 @@ router.patch("/:id", async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 });
-router.delete("/:id", async (req, res) => {
+router.delete("", async (req, res) => {
+  const { id } = req.user;
   try {
-    const item = await Cart.findByIdAndDelete(req.params.id).exec();
+    const item = await Cart.findByIdAndDelete(id).exec();
     return res.status(200).send(item);
   } catch (error) {
     return res.status(500).send({ message: error.message });

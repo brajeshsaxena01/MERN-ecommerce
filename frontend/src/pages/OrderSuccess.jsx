@@ -12,7 +12,7 @@ export const OrderSuccess = () => {
   console.log("cart items", cartItems);
   console.log(user);
   useEffect(() => {
-    dispatch(clearCart(user.id));
+    dispatch(clearCart());
     dispatch(clearCurrentOrder());
   }, [dispatch, user]);
   return (

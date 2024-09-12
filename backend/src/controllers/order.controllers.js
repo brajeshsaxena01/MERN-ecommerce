@@ -1,9 +1,10 @@
 const express = require("express");
 const Order = require("../models/order.models");
+const authorise = require("../middlewares/authorise");
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", authorise(["admin"]), async (req, res) => {
   try {
     // let query = await Product.find({}).lean().exec();
     let query = Order.find({ deleted: { $ne: true } });
@@ -48,9 +49,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/user/:userId", async (req, res) => {
+router.get("/user", async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.user.id;
     const order = await Order.find({ user: userId })
       //   .populate("user") //the "user" is that you mention in the schema as a key not as ref
       //   .lean() // the lean is used convert the mongoose docs into json, but in model we already conveted to json during modification of _id as id, so only use exec to fulfill the promise and don't use lean it will conflict and return as _id
@@ -63,8 +64,9 @@ router.get("/user/:userId", async (req, res) => {
 });
 
 router.post("", async (req, res) => {
+  const { id } = req.user;
   try {
-    const order = await Order.create(req.body);
+    const order = await Order.create({ ...req.body, user: id });
     return res.status(201).send(order);
   } catch (error) {
     return res.status(500).send({ message: error.message });

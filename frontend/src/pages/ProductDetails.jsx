@@ -102,9 +102,9 @@ export const ProductDetails = () => {
   const params = useParams();
   const product = useSelector((store) => store.ecommerceData.selectedProduct);
   const products = useSelector((store) => store.cartItem.cart.cartItems);
-  const user = useSelector((store) => store.auth.userInfo);
+  // const user = useSelector((store) => store.auth.userInfo);
 
-  console.log("selectedProduct", product);
+  // console.log("selectedProduct", product);
   const handleCart = (e) => {
     e.preventDefault();
     // If not match the id it will return -1 else return index
@@ -112,9 +112,9 @@ export const ProductDetails = () => {
       const newProduct = {
         product: product.id,
         quantity: 1,
-        user: user.id,
+        // user: user.id,// no need of this ownwards as I am using cookies to get user in the backend
       };
-      console.log(product, newProduct);
+      // console.log(product, newProduct);
       dispatch(addToCart(newProduct));
     } else {
       console.log("Product already added to the cart.");

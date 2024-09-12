@@ -61,7 +61,7 @@ export const addToCart = (payload) => (dispatch) => {
       //item or response.data both are same
       // console.log("item in add to cart", item);
       dispatch(addToCartSuccess(res.data));
-      console.log("added cart item", res.data);
+      // console.log("added cart item", res.data);
     })
     .catch(function (error) {
       dispatch(addToCartFailure(error));
@@ -73,7 +73,7 @@ export const fetchCartItemByUserId = (payload) => {
   let userId = payload;
   return (dispatch) => {
     dispatch(fetchCartItemRequest());
-    Axios.get(`/cart?user=${userId}`, {
+    Axios.get("/cart", {
       // params: {
       //   ...payload,
       // },
@@ -118,9 +118,9 @@ export const deleteItemInCart = (payload) => (dispatch) => {
     });
 };
 export const clearCart = (payload) => (dispatch) => {
-  let userId = payload;
-  console.log("user id", userId);
-  Axios.get(`/cart?user=${userId}`)
+  // let userId = payload;
+  // console.log("user id", userId);
+  Axios.get("/cart")
     .then((res) => {
       const items = res.data;
 

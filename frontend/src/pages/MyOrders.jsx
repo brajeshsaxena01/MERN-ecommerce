@@ -5,12 +5,12 @@ import { discountedPrice } from "../assets/constants";
 
 export const MyOrders = () => {
   const dispatch = useDispatch();
-  const user = useSelector((store) => store.auth.userInfo);
+  // const user = useSelector((store) => store.auth.userInfo);
   const orders = useSelector((store) => store.orderData.orders);
   console.log("orders", orders);
 
   useEffect(() => {
-    dispatch(fetchOrderByLoggedInUserId(user.id));
+    dispatch(fetchOrderByLoggedInUserId());
   }, [dispatch]);
   return (
     <div>

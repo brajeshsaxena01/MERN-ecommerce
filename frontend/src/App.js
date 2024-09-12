@@ -9,10 +9,10 @@ function App() {
   //to show the data in the cart as user logged in
   const dispatch = useDispatch();
   const user = useSelector((store) => store.auth.userInfo);
-  console.log("user", user);
+  // console.log("user", user);
   useEffect(() => {
     if (user) {
-      dispatch(fetchCartItemByUserId(user.id));
+      dispatch(fetchCartItemByUserId());
     }
   }, [dispatch, user]);
   return (

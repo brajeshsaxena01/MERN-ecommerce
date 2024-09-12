@@ -66,7 +66,8 @@ export const AdminProductDetails = () => {
   const handleCart = (e) => {
     e.preventDefault();
     delete product["id"];
-    dispatch(addToCart({ ...product, quantity: 1, user: user.id }));
+    dispatch(addToCart({ ...product, quantity: 1 }));
+    // user: user.id,// no need of userId ownwards as I am using cookies to get user in the backend
   };
   useEffect(() => {
     dispatch(fetchProductById(params.id));
