@@ -19,10 +19,6 @@ export const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((store) => store.cartItem.cart.cartItems);
   const cartLoaded = useSelector((store) => store.cartItem.cartLoaded);
-
-  const selectedProduct = useSelector(
-    (store) => store.ecommerceData.selectedProduct
-  );
   // console.log("cartItems", cartItems);
   const totalAmount = cartItems?.reduce(
     (sum, item) => sum + discountedPrice(item.product) * item.quantity,
@@ -37,6 +33,8 @@ export const Cart = () => {
   const addQuantityToCart = async (item, quantity) => {
     // console.log('cart_item', item, quantity);
 
+    const selectedProduct = item.product;
+    // console.log("selected product", selectedProduct);
     // Check before adding to the cart the product is in stock or not
     if (selectedProduct?.stock < quantity) {
       window.alert("The product is out of stock");

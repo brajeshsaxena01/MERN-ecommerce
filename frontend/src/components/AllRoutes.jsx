@@ -18,6 +18,8 @@ import { AdminProductList } from "../pages/Admin/AdminProductList";
 import { AdminProductDetails } from "../pages/Admin/AdminProductDetails";
 import { AdminProductForm } from "../pages/Admin/AdminProductForm";
 import { AdminOrder } from "../pages/Admin/AdminOrder";
+import { StripeCheckout } from "../pages/StripeCheckout";
+import { StripePaymentComplete } from "../pages/StripePaymentComplete";
 
 export const AllRoutes = () => {
   return (
@@ -82,6 +84,22 @@ export const AllRoutes = () => {
         element={
           <Protected>
             <Checkout />
+          </Protected>
+        }
+      />
+      <Route
+        path="/stripe-checkout"
+        element={
+          <Protected>
+            <StripeCheckout />
+          </Protected>
+        }
+      />
+      <Route
+        path="/complete"
+        element={
+          <Protected>
+            <StripePaymentComplete />
           </Protected>
         }
       />

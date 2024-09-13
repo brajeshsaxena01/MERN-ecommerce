@@ -46,8 +46,8 @@ router.patch("/:id", async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 });
-router.delete("", async (req, res) => {
-  const { id } = req.user;
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
   try {
     const item = await Cart.findByIdAndDelete(id).exec();
     return res.status(200).send(item);

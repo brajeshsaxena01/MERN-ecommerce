@@ -104,7 +104,7 @@ export const ProductDetails = () => {
   const products = useSelector((store) => store.cartItem.cart.cartItems);
   // const user = useSelector((store) => store.auth.userInfo);
 
-  // console.log("selectedProduct", product);
+  console.log("selectedProduct", product);
   const handleCart = (e) => {
     e.preventDefault();
     // If not match the id it will return -1 else return index

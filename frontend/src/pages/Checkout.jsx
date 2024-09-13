@@ -6,8 +6,11 @@ import { saveShipingAddress, userSignIn } from "../redux/Auth/action";
 import { useState } from "react";
 import { addOrder } from "../redux/Order/action";
 import { discountedPrice } from "../assets/constants";
+import { Modal } from "../components/Modal";
 
 export const Checkout = () => {
+  const [open, setOpen] = useState(true);
+  const [openModal, setOpenModal] = useState(-1);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const {
@@ -23,6 +26,7 @@ export const Checkout = () => {
   console.log("current order", currentOrder);
   const cartItems = useSelector((store) => store.cartItem.cart.cartItems);
   const cartLoaded = useSelector((store) => store.cartItem.cartLoaded);
+
   const totalAmount = cartItems
     ?.reduce(
       (sum, currentValue) =>
@@ -43,6 +47,19 @@ export const Checkout = () => {
     //   window.alert("The product is out of stock");
     //   return;
     // }
+
+    // Check before adding to the cart the product is in stock or not
+    const selectedProduct = item.product;
+    // console.log("selected product", selectedProduct);
+    // console.log("quantity", quantity);
+    if (selectedProduct?.stock < quantity) {
+      window.alert("The product is out of stock");
+      return;
+    }
+    if (quantity < 0) {
+      window.alert("The quantity can't be less than zero.");
+      return;
+    }
 
     dispatch(updateCartItemQuantity({ id: item.id, quantity: quantity }));
   };
@@ -82,11 +99,14 @@ export const Checkout = () => {
       {!cartItems.length && cartLoaded && (
         <Navigate to="/" replace={true}></Navigate>
       )}
-      {currentOrder && (
+      {currentOrder && currentOrder.paymentMethod === "cash" && (
         <Navigate
           to={`/order-success/${currentOrder.id}`}
           replace={true}
         ></Navigate>
+      )}
+      {currentOrder && currentOrder.paymentMethod === "card" && (
+        <Navigate to={"/stripe-checkout"} replace={true}></Navigate>
       )}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
@@ -436,9 +456,22 @@ export const Checkout = () => {
                             </div>
 
                             <div className="flex">
+                              <Modal
+                                title={`Delete ${item.product.title}`}
+                                message="Are you sure, you want to delete this item in the cart?"
+                                dangerOption="Delete"
+                                cancelOption="Cancel"
+                                cancelAction={() => {
+                                  setOpenModal(-1);
+                                }}
+                                dangerAction={(e) => {
+                                  handleRemove(item);
+                                }}
+                                showModal={openModal === item.id}
+                              ></Modal>
                               <button
                                 onClick={() => {
-                                  handleRemove(item);
+                                  setOpenModal(item.id);
                                 }}
                                 type="button"
                                 className="font-medium text-indigo-600 hover:text-indigo-500"

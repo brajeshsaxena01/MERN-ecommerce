@@ -21,6 +21,10 @@
 [regex generator](https://regexr.com/)
 [React loader spinner](https://mhnpd.github.io/react-loader-spinner/docs/components/color-ring)
 
+[stripe dashboard](https://dashboard.stripe.com/dashboard)
+
+[stripe react node js docs](https://docs.stripe.com/payments/quickstart?lang=node&client=react)
+
 ```bash
 npx json-server data.json --port 5000
 ```
