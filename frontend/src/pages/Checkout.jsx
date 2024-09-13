@@ -22,6 +22,7 @@ export const Checkout = () => {
   const currentOrder = useSelector((store) => store.orderData.currentOrder);
   console.log("current order", currentOrder);
   const cartItems = useSelector((store) => store.cartItem.cart.cartItems);
+  const cartLoaded = useSelector((store) => store.cartItem.cartLoaded);
   const totalAmount = cartItems
     ?.reduce(
       (sum, currentValue) =>
@@ -78,7 +79,9 @@ export const Checkout = () => {
 
   return (
     <>
-      {!cartItems.length && <Navigate to="/" replace={true}></Navigate>}
+      {!cartItems.length && cartLoaded && (
+        <Navigate to="/" replace={true}></Navigate>
+      )}
       {currentOrder && (
         <Navigate
           to={`/order-success/${currentOrder.id}`}

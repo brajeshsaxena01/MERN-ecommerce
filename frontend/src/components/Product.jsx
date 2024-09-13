@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/24/outline";
-import { addToCart } from "../redux/Cart/action";
+// import { addToCart } from "../redux/Cart/action";
 import { useDispatch, useSelector } from "react-redux";
 import { discountedPrice } from "../assets/constants";
 
 export const Product = (props) => {
   const { product } = props;
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const user = useSelector((store) => store.auth.userInfo);
 
   // const handleCart = (product) => {

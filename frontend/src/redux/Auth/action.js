@@ -37,6 +37,18 @@ const updateUserDetailsSuccess = (payload) => {
     payload,
   };
 };
+const checkUserLoggedInOrNotSuccess = (payload) => {
+  return {
+    type: Types.CHECKED_USER_LOGGEDIN_OR_NOT_SUCCESS,
+    payload,
+  };
+};
+const checkUserLoggedInOrNotFailure = (payload) => {
+  return {
+    type: Types.CHECKED_USER_LOGGEDIN_OR_NOT_FAILURE,
+    payload,
+  };
+};
 
 //Create user data
 export const userSignUp = (payload) => (dispatch) => {
@@ -60,7 +72,7 @@ export const userSignIn = (payload) => (dispatch) => {
   axios
     .post("/users/signin", { email, password })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       dispatch(userSignInSuccess(res.data));
     })
     .catch((err) => {
@@ -102,5 +114,18 @@ export const updateUserDetails = (payload) => (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+};
+
+export const checkLoggedInUser = (payload) => (dispatch) => {
+  axios
+    .get("/users/check")
+    .then((res) => {
+      // console.log("user info", res.data);
+      dispatch(checkUserLoggedInOrNotSuccess(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(checkUserLoggedInOrNotFailure(err.message));
     });
 };

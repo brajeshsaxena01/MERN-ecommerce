@@ -8,6 +8,7 @@ const initState = {
     ? JSON.parse(localStorage.getItem("custom_data"))
     : null,
   error: null,
+  checkedUser: false,
 };
 
 export const authReducer = (state = initState, action) => {
@@ -47,6 +48,22 @@ export const authReducer = (state = initState, action) => {
       return {
         ...state,
         userInfo: payload,
+      };
+    }
+    case Types.CHECKED_USER_LOGGEDIN_OR_NOT_SUCCESS: {
+      return {
+        ...state,
+        userInfo: payload,
+        checkedUser: true,
+
+        error: null,
+      };
+    }
+    case Types.CHECKED_USER_LOGGEDIN_OR_NOT_FAILURE: {
+      return {
+        ...state,
+        checkedUser: true,
+        error: payload,
       };
     }
     default: {

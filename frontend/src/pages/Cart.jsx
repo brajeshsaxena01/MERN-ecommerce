@@ -18,6 +18,8 @@ export const Cart = () => {
   const [openModal, setOpenModal] = useState(-1);
   const dispatch = useDispatch();
   const cartItems = useSelector((store) => store.cartItem.cart.cartItems);
+  const cartLoaded = useSelector((store) => store.cartItem.cartLoaded);
+
   const selectedProduct = useSelector(
     (store) => store.ecommerceData.selectedProduct
   );
@@ -54,7 +56,9 @@ export const Cart = () => {
 
   return (
     <>
-      {!cartItems.length && <Navigate to="/" replace={true}></Navigate>}
+      {!cartItems.length && cartLoaded && (
+        <Navigate to="/" replace={true}></Navigate>
+      )}
 
       <div>
         <div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">

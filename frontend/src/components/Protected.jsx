@@ -4,15 +4,24 @@ import { Navigate } from "react-router-dom";
 
 export const Protected = ({ children }) => {
   const user = useSelector((store) => store.auth.userInfo);
+  const checkedUser = useSelector((store) => store.auth.checkedUser);
   //   console.log("user data", user);
   // This if statement will not work here because this is jsx file,
   // if you want to use like this make js file like Protected.js.
-//   if (!user) {
-//     <Navigate to="/login" replace={true}></Navigate>;
-//   }
-//   if (user && user.role !== "admin") {
-//     <Navigate to="/" replace={true}></Navigate>;
-//   }
+  //   if (!user) {
+  //     <Navigate to="/login" replace={true}></Navigate>;
+  //   }
+  //   if (user && user.role !== "admin") {
+  //     <Navigate to="/" replace={true}></Navigate>;
+  //   }
   //   console.log("outside if");
-  return <>{!user ? <Navigate to="/login" replace={true} /> : children}</>;
+  return (
+    <>
+      {!user && checkedUser ? (
+        <Navigate to="/login" replace={true} />
+      ) : (
+        children
+      )}
+    </>
+  );
 };

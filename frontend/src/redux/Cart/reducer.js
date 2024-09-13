@@ -9,6 +9,7 @@ const initState = {
   shippingAddress: localStorage.getItem("shippingAddress")
     ? JSON.parse(localStorage.getItem("shippingAddress"))
     : {},
+  cartLoaded: false,
   loading: false,
   error: "",
 };
@@ -65,6 +66,7 @@ export const cartReducer = (state = initState, action) => {
       return {
         ...state,
         cart: { ...state.cart, cartItems: payload },
+        cartLoaded: true,
         loading: false,
         error: "",
       };
@@ -73,6 +75,7 @@ export const cartReducer = (state = initState, action) => {
       return {
         ...state,
         loading: false,
+        cartLoaded: true,
         error: payload,
       };
     }

@@ -34,6 +34,15 @@ router.post("/signin", login);
 // });
 // router.get("", crudControllers.getAll(User));
 // router.get("/:id", crudControllers.fetchById(User));
+router.get("/check", authenticate, async (req, res) => {
+  //   console.log(req.user);
+  const { email, role, addresses, orders, id } = req.user;
+  if (req.user) {
+    return res.status(200).send({ email, role, addresses, orders, id });
+  } else {
+    return res.status(401).send({ message: "User credential not available!" });
+  }
+});
 router.get("/:id", authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.params.id, "name email address id")
