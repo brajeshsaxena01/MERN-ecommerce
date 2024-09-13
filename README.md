@@ -26,3 +26,17 @@ npx json-server data.json --port 5000
 ```
 
 ### complete frontend code using json-server download Commits on Sep 7, 2024 and start json server using above command
+
+# To start the server
+
+```bash
+cd backend
+npm run dev
+```
+
+# To start frontend
+
+```bash
+cd frontend
+npm start
+```
