@@ -56,7 +56,7 @@ const clearCartSuccess = (payload) => {
 export const addToCart = (payload) => (dispatch) => {
   let item = payload;
 
-  Axios.post("/cart", item)
+  Axios.post("/api/cart", item)
     .then(function (res) {
       //item or response.data both are same
       // console.log("item in add to cart", item);
@@ -73,7 +73,7 @@ export const fetchCartItemByUserId = (payload) => {
   let userId = payload;
   return (dispatch) => {
     dispatch(fetchCartItemRequest());
-    Axios.get("/cart", {
+    Axios.get("/api/cart", {
       // params: {
       //   ...payload,
       // },
@@ -92,7 +92,7 @@ export const fetchCartItemByUserId = (payload) => {
 export const updateCartItemQuantity = (payload) => (dispatch) => {
   let updatedItem = payload;
 
-  Axios.patch(`/cart/${updatedItem.id}`, updatedItem, {
+  Axios.patch(`/api/cart/${updatedItem.id}`, updatedItem, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -108,7 +108,7 @@ export const updateCartItemQuantity = (payload) => (dispatch) => {
 export const deleteItemInCart = (payload) => (dispatch) => {
   let itemToDelete = payload;
 
-  Axios.delete(`/cart/${itemToDelete.id}`)
+  Axios.delete(`/api/cart/${itemToDelete.id}`)
     .then(function (res) {
       dispatch(deleteItemInCartSuccess(itemToDelete));
       console.log("item deleted", res.data);
@@ -120,13 +120,13 @@ export const deleteItemInCart = (payload) => (dispatch) => {
 export const clearCart = (payload) => (dispatch) => {
   // let userId = payload;
   // console.log("user id", userId);
-  Axios.get("/cart")
+  Axios.get("/api/cart")
     .then((res) => {
       const items = res.data;
 
       // console.log("item", items);
       for (let i = 0; i < items.length; i++) {
-        Axios.delete(`/cart/${items[i].id}`)
+        Axios.delete(`/api/cart/${items[i].id}`)
           .then(function (res) {
             // console.log("item deleted", res.data);
           })

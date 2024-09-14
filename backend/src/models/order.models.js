@@ -8,6 +8,7 @@ const orderSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true }, //This is the "user" that you mention in the user model during mongoose.model(name,schema) in user model
 
     paymentMethod: { type: String, required: true },
+    paymentStatus: { type: String, default: "pending" },
     status: { type: String, default: "pending" },
     selectedAddress: { type: mongoose.Schema.Types.Mixed, required: true }, // The selectedAddress will be of type object having mixed data
   },

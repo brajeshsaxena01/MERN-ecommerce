@@ -37,7 +37,7 @@ const updateOrderSuccess = (payload) => {
 export const addOrder = (payload) => (dispatch) => {
   let order = payload;
   axios
-    .post("/orders", order)
+    .post("/api/orders", order)
     .then(function (res) {
       dispatch(addOrderSuccess(res.data));
       // console.log(response);
@@ -53,7 +53,7 @@ export const clearCurrentOrder = (payload) => (dispatch) => {
 export const fetchOrderByLoggedInUserId = (payload) => (dispatch) => {
   // let userId = payload;
   axios
-    .get("/orders/user")
+    .get("/api/orders/user")
     .then((res) => {
       dispatch(fetchOrderByUserIdSuccess(res.data));
     })
@@ -73,7 +73,7 @@ export const fetchAllOrders =
     }
 
     axios
-      .get(`/orders?${queryString}`)
+      .get(`/api/orders?${queryString}`)
       .then((res) => {
         const totalOrder = res.headers["x-total-count"];
         dispatch(
@@ -88,7 +88,7 @@ export const fetchAllOrders =
 export const updateOrder = (payload) => (dispatch) => {
   let updatedOrder = payload;
   axios
-    .patch(`/orders/${updatedOrder.id}`, updatedOrder, {
+    .patch(`/api/orders/${updatedOrder.id}`, updatedOrder, {
       headers: {
         "Content-Type": "application/json",
       },

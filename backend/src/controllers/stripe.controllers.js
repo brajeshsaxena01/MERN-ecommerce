@@ -15,7 +15,7 @@ const calculateOrderAmount = (totalAmount) => {
 };
 
 router.post("", async (req, res) => {
-  const { totalAmount } = req.body;
+  const { totalAmount, orderId } = req.body;
   console.log("total amount", totalAmount);
 
   // Create a PaymentIntent with the order amount and currency
@@ -26,6 +26,9 @@ router.post("", async (req, res) => {
     automatic_payment_methods: {
       enabled: true,
     },
+    // metadata: {
+    //   orderId,
+    // },
   });
 
   res.send({

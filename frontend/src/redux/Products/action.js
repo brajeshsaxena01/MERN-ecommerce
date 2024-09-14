@@ -54,7 +54,7 @@ const updateProductSuccess = (payload) => {
 export const fetchData = (payload) => {
   return (dispatch) => {
     dispatch(fetchDataRequest());
-    Axios.get("/products", {
+    Axios.get("/api/products", {
       // params: {
       //   ...payload,
       // },
@@ -106,7 +106,7 @@ export const fetchProductBYFilterSortPagination = ({
 
   return (dispatch) => {
     dispatch(fetchDataRequest());
-    Axios.get("/products?" + queryString, {
+    Axios.get("/api/products?" + queryString, {
       // params: {
       //   ...payload,
       // },
@@ -127,7 +127,7 @@ export const fetchProductBYFilterSortPagination = ({
 
 export const fetchBrands = (payload) => {
   return (dispatch) => {
-    Axios.get("/brands", {
+    Axios.get("/api/brands", {
       // params: {
       //   ...payload,
       // },
@@ -145,7 +145,7 @@ export const fetchBrands = (payload) => {
 };
 export const fetchCategories = (payload) => {
   return (dispatch) => {
-    Axios.get("/categories", {
+    Axios.get("/api/categories", {
       // params: {
       //   ...payload,
       // },
@@ -163,7 +163,7 @@ export const fetchCategories = (payload) => {
 };
 export const fetchProductById = (id) => {
   return (dispatch) => {
-    Axios.get(`/products/${id}`, {
+    Axios.get(`/api/products/${id}`, {
       // params: {
       //   ...payload,
       // },
@@ -182,7 +182,7 @@ export const fetchProductById = (id) => {
 
 export const createProduct = (payload) => (dispatch) => {
   let product = payload;
-  Axios.post("/products", product)
+  Axios.post("/api/products", product)
     .then(function (res) {
       dispatch(createProductSuccess(res.data));
       console.log(res.data);
@@ -193,7 +193,7 @@ export const createProduct = (payload) => (dispatch) => {
 };
 export const updateProduct = (payload) => (dispatch) => {
   let product = payload;
-  Axios.patch(`/products/${product.id}`, product)
+  Axios.patch(`/api/products/${product.id}`, product)
     .then(function (res) {
       dispatch(updateProductSuccess(res.data));
       console.log(res.data);

@@ -54,7 +54,7 @@ const checkUserLoggedInOrNotFailure = (payload) => {
 export const userSignUp = (payload) => (dispatch) => {
   let userData = payload;
   axios
-    .post("/users/signup", userData)
+    .post("/api/users/signup", userData)
     .then(function (response) {
       dispatch(userSignUpSuccess(response.data));
       // console.log(response);
@@ -70,7 +70,7 @@ export const userSignIn = (payload) => (dispatch) => {
   const loginInfo = payload;
   // console.log(payload);
   axios
-    .post("/users/signin", { email, password })
+    .post("/api/users/signin", { email, password })
     .then((res) => {
       // console.log(res.data);
       dispatch(userSignInSuccess(res.data));
@@ -89,7 +89,7 @@ export const userSignOut = () => (dispatch) => {
 export const saveShipingAddress = (payload) => (dispatch) => {
   let updatedUserData = payload;
   axios
-    .patch(`/users/${updatedUserData.id}`, updatedUserData, {
+    .patch(`/api/users/${updatedUserData.id}`, updatedUserData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -104,7 +104,7 @@ export const saveShipingAddress = (payload) => (dispatch) => {
 export const updateUserDetails = (payload) => (dispatch) => {
   let updatedUserData = payload;
   axios
-    .patch(`/users/${updatedUserData.id}`, updatedUserData, {
+    .patch(`/api/users/${updatedUserData.id}`, updatedUserData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -119,7 +119,7 @@ export const updateUserDetails = (payload) => (dispatch) => {
 
 export const checkLoggedInUser = (payload) => (dispatch) => {
   axios
-    .get("/users/check")
+    .get("/api/users/check")
     .then((res) => {
       // console.log("user info", res.data);
       dispatch(checkUserLoggedInOrNotSuccess(res.data));

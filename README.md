@@ -44,3 +44,14 @@ npm run dev
 cd frontend
 npm start
 ```
+
+# Deployment Process
+
+```bash
+cd frontend
+npm run build
+```
+
+### Copy the build file and put it into backend folder
+
+### Note: during card payment enter card number as 4242 4242 4242 4242
