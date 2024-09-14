@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 //the build file is the build of frontend by using npm run build command
-app.use(express.static(path.join(__dirname, "../build")));
+app.use(express.static(path.resolve(__dirname, "../build")));
 // console.log(path.resolve(__dirname, "../build"));
 
 // This is your test secret API key.
@@ -41,7 +41,7 @@ app.use("/api/create-payment-intent", stripeController);
 
 // This line we add to make react router work in case o other routes doesn't work.
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../build", "index.html"));
+  return res.sendFile(path.resolve(__dirname, "../build", "index.html"));
 });
 
 module.exports = app;

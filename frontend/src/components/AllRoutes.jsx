@@ -57,7 +57,7 @@ export const AllRoutes = () => {
         }
       />
       <Route
-        path="/admin/orderS"
+        path="/admin/orders"
         element={
           <AdminProtected>
             <AdminOrder />
@@ -109,7 +109,7 @@ export const AllRoutes = () => {
         element={is_admin ? <MakeAdmin /> : <NotAdmin />}
       ></Route> */}
       <Route path="/order-success/:id" element={<OrderSuccess />} />
-      <Route path="/orders" element={<MyOrders />} />
+      <Route path="/my-orders" element={<MyOrders />} />
       <Route path="/profile" element={<MyProfile />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>

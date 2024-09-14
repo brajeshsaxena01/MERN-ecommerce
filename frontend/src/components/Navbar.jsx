@@ -29,7 +29,7 @@ const navigation = [
 ];
 const userNavigation = [
   { name: "My Profile", to: "/profile" },
-  { name: "My Orders", to: "/orders" },
+  { name: "My Orders", to: "/my-orders" },
   { name: "Sign out", to: "/logout" },
 ];
 
