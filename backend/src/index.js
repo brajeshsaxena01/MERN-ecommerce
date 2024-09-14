@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path = require("path");
+const connect = require("./configs/db");
+const port = process.env.PORT;
 
 const productsController = require("./controllers/product.controllers");
 const brandsController = require("./controllers/brand.controllers");
@@ -42,6 +44,16 @@ app.use("/api/create-payment-intent", stripeController);
 // This line we add to make react router work in case o other routes doesn't work.
 app.get("*", (req, res) => {
   return res.sendFile(path.resolve(__dirname, "../build", "index.html"));
+});
+
+app.listen(port, async () => {
+  try {
+    await connect();
+    console.log("MongoDb connected");
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(`listening on port ${port}`);
 });
 
 module.exports = app;
