@@ -28,7 +28,7 @@ export default function StripeCheckoutForm({ dpmCheckerLink }) {
       confirmParams: {
         // Make sure to change this to your payment completion page
         // return_url: "http://localhost:3000/complete",
-        return_url: "https://mern-ecommerce-ochre-phi.vercel.app/complete",
+        return_url: "https://mern-e-commerce-api-tvyv.onrender.com/complete",
       },
     });
 
