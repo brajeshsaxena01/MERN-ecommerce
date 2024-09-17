@@ -49,6 +49,18 @@ const checkUserLoggedInOrNotFailure = (payload) => {
     payload,
   };
 };
+const fetchAllUsersSuccess = (payload) => {
+  return {
+    type: Types.FETCH_ALL_USERS_SUCCESS,
+    payload,
+  };
+};
+const editUserRoleSuccess = (payload) => {
+  return {
+    type: Types.EDIT_USER_ROLE_SUCCESS,
+    payload,
+  };
+};
 
 //Create user data
 export const userSignUp = (payload) => (dispatch) => {
@@ -127,5 +139,32 @@ export const checkLoggedInUser = (payload) => (dispatch) => {
     .catch((err) => {
       console.log(err);
       dispatch(checkUserLoggedInOrNotFailure(err.message));
+    });
+};
+export const fetchAllUsers = (payload) => (dispatch) => {
+  axios
+    .get("/api/users")
+    .then((res) => {
+      // console.log("user info", res.data);
+      dispatch(fetchAllUsersSuccess(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const updateUserRole = (payload) => (dispatch) => {
+  let updatedUserData = payload;
+  axios
+    .patch(`/api/users/${updatedUserData.id}`, updatedUserData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      dispatch(editUserRoleSuccess(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };

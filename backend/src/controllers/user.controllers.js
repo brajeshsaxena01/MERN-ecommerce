@@ -3,6 +3,7 @@ const crudControllers = require("./crud.controllers");
 const User = require("../models/user.models");
 const { register, login } = require("./auth.controllers");
 const authenticate = require("../middlewares/authenticate");
+const authorise = require("../middlewares/authorise");
 
 const router = express.Router();
 
@@ -32,7 +33,12 @@ router.post("/signin", login);
 //     return res.status(500).send({ message: error.message });
 //   }
 // });
-// router.get("", crudControllers.getAll(User));
+router.get(
+  "",
+  authenticate,
+  authorise(["admin"]),
+  crudControllers.getAll(User)
+);
 // router.get("/:id", crudControllers.fetchById(User));
 router.get("/check", authenticate, async (req, res) => {
   //   console.log(req.user);

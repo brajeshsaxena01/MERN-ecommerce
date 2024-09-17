@@ -1,7 +1,5 @@
 # MERN-ecommerce
 
-
-
 ```bash
 npx json-server data.json --port 5000
 ```
@@ -59,7 +57,6 @@ npm run build
   <!-- - Email using Nodemailer - using GMail SMTP system -->
 - Payments gateway using Stripe
 
-
 <!-- https://readme.so/  How to write readme file-->
 <!-- https://dummyjson.com/  get dummy data in json format like list of products, list of users, etc.-->
 
@@ -84,3 +81,5 @@ npm run build
 [stripe dashboard](https://dashboard.stripe.com/dashboard)
 
 [stripe react node js docs](https://docs.stripe.com/payments/quickstart?lang=node&client=react)
+
+[render dashboard](https://dashboard.render.com/)

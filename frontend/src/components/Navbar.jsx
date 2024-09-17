@@ -26,6 +26,7 @@ const navigation = [
   { name: "Products", to: "/", current: true, user: true },
   { name: "Products", to: "/admin", current: false, admin: true },
   { name: "Orders", to: "/admin/orders", current: false, admin: true },
+  { name: "Users", to: "/admin/users", current: false, admin: true },
 ];
 const userNavigation = [
   { name: "My Profile", to: "/profile" },
