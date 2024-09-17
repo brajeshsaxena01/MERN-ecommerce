@@ -1,5 +1,7 @@
+import { toast } from "react-toastify";
 import * as types from "./actionTypes";
 import Axios from "axios";
+import { getError } from "../../components/utils";
 const fetchDataRequest = (payload) => {
   return {
     type: types.FETCH_DATA_REQUEST,
@@ -185,10 +187,12 @@ export const createProduct = (payload) => (dispatch) => {
   Axios.post("/api/products", product)
     .then(function (res) {
       dispatch(createProductSuccess(res.data));
+      toast.success("Product added successfully!");
       console.log(res.data);
     })
     .catch(function (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(getError(error));
     });
 };
 export const updateProduct = (payload) => (dispatch) => {
@@ -196,9 +200,11 @@ export const updateProduct = (payload) => (dispatch) => {
   Axios.patch(`/api/products/${product.id}`, product)
     .then(function (res) {
       dispatch(updateProductSuccess(res.data));
-      console.log(res.data);
+      // console.log(res.data);
+      toast.success("Product updated successfully!");
     })
     .catch(function (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(getError(error));
     });
 };

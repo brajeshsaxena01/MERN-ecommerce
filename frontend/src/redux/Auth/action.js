@@ -1,5 +1,7 @@
+import { toast } from "react-toastify";
 import * as Types from "./actionTypes";
 import axios from "axios";
+import { getError } from "../../components/utils";
 
 const userSignUpSuccess = (payload) => {
   return {
@@ -84,18 +86,31 @@ export const userSignIn = (payload) => (dispatch) => {
   axios
     .post("/api/users/signin", { email, password })
     .then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
       dispatch(userSignInSuccess(res.data));
+      toast.success("You logged in successfully!");
     })
     .catch((err) => {
-      dispatch(userSignInFailure({ message: err.message }));
-      console.log("message", err.message);
+      let message = getError(err);
+      toast.error();
+      dispatch(userSignInFailure({ message: message }));
+      // toast.error(err.message, { icon: false });
+      console.log("message", err);
     });
 };
 
 export const userSignOut = () => (dispatch) => {
   console.log("in user-signout");
-  dispatch(userSignOutSuccess());
+  axios
+    .get("/api/users/logout")
+    .then((res) => {
+      console.log(res.data);
+      dispatch(userSignOutSuccess());
+      toast.success("Logged out successfully!");
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
 export const saveShipingAddress = (payload) => (dispatch) => {
@@ -108,9 +123,11 @@ export const saveShipingAddress = (payload) => (dispatch) => {
     })
     .then((res) => {
       dispatch(saveShipingAddressSuccess(res.data));
+      toast.success("Address added successfully!");
     })
     .catch((err) => {
-      console.log(err);
+      toast.error(getError(err));
+      // console.log(err);
     });
 };
 export const updateUserDetails = (payload) => (dispatch) => {
@@ -123,9 +140,11 @@ export const updateUserDetails = (payload) => (dispatch) => {
     })
     .then((res) => {
       dispatch(updateUserDetailsSuccess(res.data));
+      toast.success("Details updated successfully!");
     })
     .catch((err) => {
-      console.log(err);
+      toast.error(getError(err));
+      // console.log(err);
     });
 };
 
@@ -137,7 +156,7 @@ export const checkLoggedInUser = (payload) => (dispatch) => {
       dispatch(checkUserLoggedInOrNotSuccess(res.data));
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       dispatch(checkUserLoggedInOrNotFailure(err.message));
     });
 };
@@ -149,7 +168,8 @@ export const fetchAllUsers = (payload) => (dispatch) => {
       dispatch(fetchAllUsersSuccess(res.data));
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      toast.error(getError(err));
     });
 };
 
@@ -163,8 +183,10 @@ export const updateUserRole = (payload) => (dispatch) => {
     })
     .then((res) => {
       dispatch(editUserRoleSuccess(res.data));
+      toast.success("Role updated successfully!");
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      toast.error(getError(err));
     });
 };

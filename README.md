@@ -83,3 +83,5 @@ npm run build
 [stripe react node js docs](https://docs.stripe.com/payments/quickstart?lang=node&client=react)
 
 [render dashboard](https://dashboard.render.com/)
+
+[react-toastify](https://fkhadra.github.io/react-toastify/introduction/)

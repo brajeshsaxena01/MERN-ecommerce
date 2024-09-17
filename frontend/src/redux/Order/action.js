@@ -1,5 +1,7 @@
+import { toast } from "react-toastify";
 import * as Types from "./actionTypes";
 import axios from "axios";
+import { getError } from "../../components/utils";
 
 const addOrderSuccess = (payload) => {
   return {
@@ -40,10 +42,12 @@ export const addOrder = (payload) => (dispatch) => {
     .post("/api/orders", order)
     .then(function (res) {
       dispatch(addOrderSuccess(res.data));
+      toast.success("Order placed successfully!");
       // console.log(response);
     })
     .catch(function (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(getError(error));
     });
 };
 export const clearCurrentOrder = (payload) => (dispatch) => {

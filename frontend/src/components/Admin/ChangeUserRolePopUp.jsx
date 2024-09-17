@@ -33,6 +33,7 @@ export const ChangeUserRolePopUp = ({ user, onClose }) => {
             value={role}
             onChange={(e) => setRole(e.target.value)}
           >
+            <option value={""}>--choose role--</option>
             {Object.values(roles).map((el) => {
               return (
                 <option value={el} key={el}>

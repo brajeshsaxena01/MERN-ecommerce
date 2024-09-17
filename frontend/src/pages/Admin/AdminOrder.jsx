@@ -177,7 +177,7 @@ export const AdminOrder = () => {
                             onClick={(e) => handleShow(order)}
                           ></EyeIcon>
                         </div>
-                        <div className="w-6 mr-2 transform hover:text-purple-500 hover:scale-120">
+                        <div className="w-6 mr-2 transform text-purple-500 hover:text-purple-700 hover:scale-120 cursor-pointer">
                           <PencilIcon
                             className="w-8 h-8"
                             onClick={(e) => handleEdit(order)}

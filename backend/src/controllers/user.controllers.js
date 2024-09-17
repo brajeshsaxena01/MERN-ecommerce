@@ -1,7 +1,7 @@
 const express = require("express");
 const crudControllers = require("./crud.controllers");
 const User = require("../models/user.models");
-const { register, login } = require("./auth.controllers");
+const { register, login, logout } = require("./auth.controllers");
 const authenticate = require("../middlewares/authenticate");
 const authorise = require("../middlewares/authorise");
 
@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.post("/signup", register);
 router.post("/signin", login);
+router.get("/logout", logout);
 
 // router.post("/signup", crudControllers.post(User));
 // router.post("/signin", async (req, res) => {

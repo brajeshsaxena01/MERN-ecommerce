@@ -1,4 +1,6 @@
 import React from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Disclosure,
   DisclosureButton,
@@ -28,11 +30,6 @@ const navigation = [
   { name: "Orders", to: "/admin/orders", current: false, admin: true },
   { name: "Users", to: "/admin/users", current: false, admin: true },
 ];
-const userNavigation = [
-  { name: "My Profile", to: "/profile" },
-  { name: "My Orders", to: "/my-orders" },
-  { name: "Sign out", to: "/logout" },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -43,8 +40,19 @@ export const Navbar = ({ children }) => {
 
   // console.log("cart items in navbar", cartItems);
   const user = useSelector((store) => store.auth.userInfo);
+  const userNavigation = [
+    { name: "My Profile", to: "/profile" },
+    { name: "My Orders", to: "/my-orders" },
+    { name: user ? "Sign out" : "Log In", to: user ? "/logout" : "login" },
+  ];
+
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        limit={1}
+      ></ToastContainer>
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -111,7 +119,8 @@ export const Navbar = ({ children }) => {
                         <span className="sr-only">Open user menu</span>
                         <img
                           alt=""
-                          src={user?.imageUrl}
+                          // src={user?.imageUrl}
+                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                           className="h-8 w-8 rounded-full"
                         />
                       </MenuButton>

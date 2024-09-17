@@ -1,5 +1,7 @@
+import { toast } from "react-toastify";
 import * as types from "./actionTypes";
 import Axios from "axios";
+import { getError } from "../../components/utils";
 
 const addToCartSuccess = (payload) => {
   return {
@@ -60,12 +62,14 @@ export const addToCart = (payload) => (dispatch) => {
     .then(function (res) {
       //item or response.data both are same
       // console.log("item in add to cart", item);
+      toast.success("Item added to cart!");
       dispatch(addToCartSuccess(res.data));
       // console.log("added cart item", res.data);
     })
     .catch(function (error) {
+      toast.error(getError(error));
       dispatch(addToCartFailure(error));
-      console.log(error);
+      // console.log(error);
     });
 };
 

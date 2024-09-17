@@ -74,4 +74,19 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+// Clear the cookie in Node.js
+const logout = async (req, res) => {
+  try {
+    // Setting the cookie with the same name and an expiration date in the past
+    res.clearCookie("jwt", {
+      httpOnly: true, // If you set the cookie with httpOnly: true, you need to keep it
+      secure: process.env.NODE_ENV === "production", // Set to true if in production (HTTPS)
+      sameSite: "strict",
+    });
+    return res.status(200).send("Cookie cleared");
+  } catch (error) {
+    return res.status(400).send({ message: error.message });
+  }
+};
+
+module.exports = { register, login, logout };
