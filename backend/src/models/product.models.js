@@ -23,6 +23,7 @@ const productSchema = new mongoose.Schema(
       max: [5, "wrong max rating"],
       default: 0,
     },
+    reviews: { type: [mongoose.Schema.Types.Mixed] },
     stock: {
       type: Number,
       required: true,

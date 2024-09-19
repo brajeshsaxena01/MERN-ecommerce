@@ -6,6 +6,7 @@ const initState = {
   brands: "",
   categories: "",
   selectedProduct: null,
+  reviews: [],
   loading: false,
   error: "",
 };
@@ -67,6 +68,7 @@ export const productReducer = (state = initState, action) => {
         error: "",
       };
     }
+
     case Types.UPDATE_PRODUCT_SUCCESS: {
       const newItem = payload;
       //.find() method will return the product that matches the id else it return undefined
@@ -84,6 +86,22 @@ export const productReducer = (state = initState, action) => {
         ...state,
         products: productsData,
         selectedProduct: newItem,
+        loading: false,
+        error: "",
+      };
+    }
+    case Types.FETCH_REVIEWS_SUCCESS: {
+      return {
+        ...state,
+        reviews: payload,
+        loading: false,
+        error: "",
+      };
+    }
+    case Types.CREATE_REVIEWS_SUCCESS: {
+      return {
+        ...state,
+        reviews: [...state.reviews, payload],
         loading: false,
         error: "",
       };

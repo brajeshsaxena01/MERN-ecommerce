@@ -60,7 +60,7 @@ const data = {
       ],
       thumbnail:
         "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
-      deleted: true,
+      deleted: false,
     },
     {
       id: 2,
@@ -120,7 +120,7 @@ const data = {
       ],
       thumbnail:
         "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png",
-      deleted: true,
+      deleted: false,
     },
     {
       id: 3,
@@ -180,7 +180,7 @@ const data = {
       ],
       thumbnail:
         "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
-      deleted: true,
+      deleted: false,
     },
     {
       id: 4,
@@ -240,7 +240,7 @@ const data = {
       ],
       thumbnail:
         "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/thumbnail.png",
-      deleted: true,
+      deleted: false,
     },
     {
       id: 5,
@@ -5942,69 +5942,6 @@ const data = {
       thumbnail:
         "https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20Airpods/thumbnail.png",
     },
-    {
-      title: "Essence Mascara Lash Princess",
-      description:
-        "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-      brand: "Essence",
-      category: "beauty",
-      price: 25,
-      discountPercentage: 7,
-      stock: 0,
-      thumbnail:
-        "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png",
-      images: [
-        "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png",
-        "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png",
-        "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png",
-        "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png",
-      ],
-      rating: 0,
-      id: 101,
-      deleted: true,
-    },
-    {
-      title: "Eyeshadow Palette with Mirror",
-      description:
-        "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
-      brand: "Glamour Beauty",
-      category: "beauty",
-      price: 20,
-      discountPercentage: 6,
-      stock: 5,
-      thumbnail:
-        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png",
-      images: [
-        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
-        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
-        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
-        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
-      ],
-      rating: 0,
-      id: 102,
-      deleted: true,
-    },
-    {
-      title: "Eyeshadow Palette with Mirror",
-      description:
-        "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
-      brand: "Glamour Beauty",
-      category: "beauty",
-      price: 20,
-      discountPercentage: 6,
-      stock: 5,
-      thumbnail:
-        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png",
-      images: [
-        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
-        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
-        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
-        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
-      ],
-      rating: 0,
-      id: 103,
-      deleted: true,
-    },
   ],
   brands: [
     {
@@ -6092,7 +6029,7 @@ const data = {
     {
       value: "furniture",
       label: "Furniture",
-      checked: true,
+      checked: false,
     },
     {
       value: "groceries",
@@ -6238,7 +6175,7 @@ const data = {
       ],
       thumbnail:
         "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
-      deleted: true,
+      deleted: false,
       productId: 1,
       quantity: 1,
       user: 4,
@@ -6303,7 +6240,7 @@ const data = {
       ],
       thumbnail:
         "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
-      deleted: true,
+      deleted: false,
       productId: 1,
       quantity: 1,
       user: 1,

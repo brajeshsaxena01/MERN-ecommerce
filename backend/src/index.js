@@ -11,6 +11,7 @@ const usersController = require("./controllers/user.controllers");
 const cartController = require("./controllers/cart.controllers");
 const ordersController = require("./controllers/order.controllers");
 const stripeController = require("./controllers/stripe.controllers");
+const reviewsController = require("./controllers/review.controllers");
 
 const app = express();
 const dotenv = require("dotenv");
@@ -38,6 +39,8 @@ app.use("/api/cart", authenticate, cartController);
 app.use("/api/orders", authenticate, ordersController);
 
 app.use("/api/create-payment-intent", stripeController);
+
+app.use("/api/reviews", reviewsController);
 
 // This line we add to make react router work in case o other routes doesn't work.
 app.get("*", (req, res) => {

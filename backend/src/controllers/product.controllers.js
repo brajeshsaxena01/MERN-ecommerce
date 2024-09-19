@@ -82,7 +82,7 @@ router.get(
 router.patch(
   "/:id",
   authenticate,
-  authorise(["admin", "seller"]),
+  // authorise(["admin", "seller"]),
   async (req, res) => {
     try {
       const product = await Product.findByIdAndUpdate(req.params.id, req.body, {

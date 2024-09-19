@@ -50,7 +50,7 @@ export const Navbar = ({ children }) => {
     <>
       <ToastContainer
         position="top-right"
-        autoClose={1000}
+        autoClose={5000}
         limit={1}
       ></ToastContainer>
       <div className="min-h-full">

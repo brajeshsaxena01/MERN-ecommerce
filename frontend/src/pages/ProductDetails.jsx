@@ -21,13 +21,22 @@
 */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchProductById } from "../redux/Products/action";
+import {
+  createReviews,
+  fetchProductById,
+  fetchReviewsByProductId,
+  updateProduct,
+} from "../redux/Products/action";
 import { addToCart } from "../redux/Cart/action";
+import { toast } from "react-toastify";
+import Rating from "../components/Rating";
+import { ShowDynamicStart } from "../components/ShowDynamicStart";
+import ReviewCard from "../components/ReviewCard";
 
 // const product = {
 //   name: "Basic Tee 6-Pack",
@@ -98,13 +107,63 @@ function classNames(...classes) {
 export const ProductDetails = () => {
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
+  const [open, setOpen] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  // console.log(rating);
+  // console.log(comment);
+
   const dispatch = useDispatch();
   const params = useParams();
   const product = useSelector((store) => store.ecommerceData.selectedProduct);
+  const reviewsOfTheSelectedProduct = useSelector(
+    (store) => store.ecommerceData.reviews
+  );
+  console.log("reviewsOfTheSelectedProduct", reviewsOfTheSelectedProduct);
   const products = useSelector((store) => store.cartItem.cart.cartItems);
-  // const user = useSelector((store) => store.auth.userInfo);
+  const user = useSelector((store) => store.auth.userInfo);
 
-  console.log("selectedProduct", product);
+  // console.log("selectedProduct", product);
+  const handleReview = () => {
+    submitReviewToggle();
+    console.log("inside handle review");
+    const isReviewPresentInTheReviews = reviewsOfTheSelectedProduct.find(
+      (x) => x.userId.email === user.email
+    );
+    // console.log("already submited", isReviewPresentInTheReviews);
+    if (isReviewPresentInTheReviews) {
+      return toast.warning("You already rated the product!");
+    }
+
+    const sumOfRating = reviewsOfTheSelectedProduct.reduce((sum, cv) => {
+      return sum + cv.rating;
+    }, rating);
+    const avgRating = (
+      sumOfRating /
+      (reviewsOfTheSelectedProduct.length + 1)
+    ).toFixed(2);
+    console.log(sumOfRating, avgRating, comment, rating);
+    dispatch(createReviews({ id: product.id, rating, comment }));
+    dispatch(updateProduct({ id: product.id, rating: avgRating }));
+  };
+  const submitReviewToggle = () => {
+    //To make sure the user is logged in before submitting the review.
+    if (!user) {
+      return toast.warning("Please login to Submit Review!");
+    }
+    setOpen(!open);
+  };
+
+  // Create a reference for the "REVIEWS" section
+  const reviewsRef = useRef(null);
+
+  // Scroll function
+  const scrollToReviews = () => {
+    if (reviewsRef.current) {
+      reviewsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const handleCart = (e) => {
     e.preventDefault();
     // If not match the id it will return -1 else return index
@@ -117,11 +176,13 @@ export const ProductDetails = () => {
       // console.log(product, newProduct);
       dispatch(addToCart(newProduct));
     } else {
+      toast.warning("Already added to cart!");
       console.log("Product already added to the cart.");
     }
   };
   useEffect(() => {
     dispatch(fetchProductById(params.id));
+    dispatch(fetchReviewsByProductId({ id: params.id }));
   }, [dispatch, params.id]);
   return (
     <div className="bg-white">
@@ -213,7 +274,7 @@ export const ProductDetails = () => {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                {product.price}
+                ${product.price}
               </p>
 
               {/* Reviews */}
@@ -221,7 +282,7 @@ export const ProductDetails = () => {
                 <h3 className="sr-only">Reviews</h3>
                 <div className="flex items-center">
                   <div className="flex items-center">
-                    {[0, 1, 2, 3, 4].map((rating) => (
+                    {/* {[0, 1, 2, 3, 4].map((rating) => (
                       <StarIcon
                         key={rating}
                         aria-hidden="true"
@@ -232,15 +293,16 @@ export const ProductDetails = () => {
                           "h-5 w-5 flex-shrink-0"
                         )}
                       />
-                    ))}
+                    ))} */}
+                    <ShowDynamicStart rating={product.rating} />
                   </div>
                   <p className="sr-only">{product.rating} out of 5 stars</p>
-                  <a
-                    href={reviews.href}
-                    className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                  <p
+                    onClick={scrollToReviews}
+                    className="cursor-pointer ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
                   >
-                    {product.reviews?.length} reviews
-                  </a>
+                    {reviewsOfTheSelectedProduct?.length} reviews
+                  </p>
                 </div>
               </div>
 
@@ -386,8 +448,70 @@ export const ProductDetails = () => {
                   <p className="text-sm text-gray-600">{product.description}</p>
                 </div>
               </div>
+              <button
+                onClick={submitReviewToggle}
+                type="submit"
+                className="mt-10 flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                Rate Product
+              </button>
             </div>
           </div>
+          <div
+            className={`fixed inset-0 z-10 overflow-y-auto ${
+              open ? "" : "hidden"
+            }`}
+          >
+            <div className="flex items-center justify-center min-h-screen">
+              <div className="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+                <h2 className="text-xl font-semibold mb-4">Submit Review</h2>
+
+                <div className="mb-4">
+                  <Rating
+                    onChange={(e) => setRating(e.target.value)}
+                    value={rating}
+                  />
+                </div>
+
+                <textarea
+                  className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  cols="30"
+                  rows="5"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                ></textarea>
+
+                <div className="flex justify-end mt-4 space-x-2">
+                  <button
+                    onClick={submitReviewToggle}
+                    className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleReview}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div ref={reviewsRef} className="text-center my-8">
+            <h2 className="text-2xl font-semibold">REVIEWS</h2>
+            <div className="mt-2 w-16 h-0.5 bg-gray-300 mx-auto"></div>
+          </div>
+          {product.reviews ? (
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {reviewsOfTheSelectedProduct?.map((review, indx) => (
+                <ReviewCard key={indx} review={review} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 text-center mt-4">No Reviews Yet</p>
+          )}
         </div>
       ) : null}
     </div>

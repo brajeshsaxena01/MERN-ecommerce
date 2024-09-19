@@ -51,6 +51,18 @@ const updateProductSuccess = (payload) => {
     payload,
   };
 };
+const fetchReviewsSuccess = (payload) => {
+  return {
+    type: types.FETCH_REVIEWS_SUCCESS,
+    payload,
+  };
+};
+const createReviewsSuccess = (payload) => {
+  return {
+    type: types.CREATE_REVIEWS_SUCCESS,
+    payload,
+  };
+};
 
 //fetching data request-->
 export const fetchData = (payload) => {
@@ -201,7 +213,40 @@ export const updateProduct = (payload) => (dispatch) => {
     .then(function (res) {
       dispatch(updateProductSuccess(res.data));
       // console.log(res.data);
-      toast.success("Product updated successfully!");
+      // toast.success("Product updated successfully!");
+    })
+    .catch(function (error) {
+      // console.log(error);
+      toast.error(getError(error));
+    });
+};
+
+export const fetchReviewsByProductId = (payload) => {
+  const productId = payload.id;
+  console.log("productId", productId);
+  return (dispatch) => {
+    Axios.get(`/api/reviews/${productId}`) //--> Check index.js for remaining url or check package.json just after name at top you will found proxy
+      .then((res) => {
+        dispatch(fetchReviewsSuccess(res.data));
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+};
+
+//Try to make seperate collection for reviews think how?
+export const createReviews = (payload) => (dispatch) => {
+  let { id, rating, comment } = payload;
+  let productId = id;
+  Axios.post(`/api/reviews/${productId}`, { rating, comment })
+    .then(function (res) {
+      dispatch(createReviewsSuccess(res.data));
+      // console.log(res.data);
+      if (res.data.message) {
+        toast.warning(res.data.message);
+      }
+      toast.success("Thanks for your reviews!");
     })
     .catch(function (error) {
       // console.log(error);
