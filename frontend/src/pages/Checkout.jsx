@@ -85,6 +85,7 @@ export const Checkout = () => {
       user: user.id,
       paymentMethod,
       selectedAddress,
+      paymentMethod, //added this to stop notification when payment method is card
       status: "pending", //other status can be delivered, received
     };
     dispatch(addOrder(order));

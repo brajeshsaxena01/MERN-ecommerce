@@ -503,7 +503,7 @@ export const ProductDetails = () => {
             <h2 className="text-2xl font-semibold">REVIEWS</h2>
             <div className="mt-2 w-16 h-0.5 bg-gray-300 mx-auto"></div>
           </div>
-          {product.reviews ? (
+          {reviewsOfTheSelectedProduct ? (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {reviewsOfTheSelectedProduct?.map((review, indx) => (
                 <ReviewCard key={indx} review={review} />

@@ -42,7 +42,9 @@ export const addOrder = (payload) => (dispatch) => {
     .post("/api/orders", order)
     .then(function (res) {
       dispatch(addOrderSuccess(res.data));
-      toast.success("Order placed successfully!");
+      if (order.paymentMethod == "cash") {
+        toast.success("Order placed successfully!");
+      }
       // console.log(response);
     })
     .catch(function (error) {

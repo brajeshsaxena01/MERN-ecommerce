@@ -1,8 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
-// import { useSelector, useDispatch } from "react-redux";
-// import { increment, incrementAsync, selectCount } from "./cartSlice";
-import { Dialog, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -19,7 +15,7 @@ export const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((store) => store.cartItem.cart.cartItems);
   const cartLoaded = useSelector((store) => store.cartItem.cartLoaded);
-  // console.log("cartItems", cartItems);
+  console.log("cartItems", cartItems);
   const totalAmount = cartItems?.reduce(
     (sum, item) => sum + discountedPrice(item.product) * item.quantity,
     0
