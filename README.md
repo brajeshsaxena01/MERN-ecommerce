@@ -1,4 +1,5 @@
 # MERN-ecommerce
+<img width="1514" height="849" alt="Screenshot 2025-11-04 101552" src="https://github.com/user-attachments/assets/3b98ca0e-44d0-4683-8bd4-85b3e3a22c2b" />
 
 ```bash
 npx json-server data.json --port 5000
@@ -11,6 +12,7 @@ npx json-server data.json --port 5000
 ```bash
 cd backend
 npm run dev
+
 ```
 
 # To start frontend
