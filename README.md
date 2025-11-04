@@ -1,8 +1,17 @@
-# MERN-ecommerce
 <img width="1514" height="849" alt="Screenshot 2025-11-04 101552" src="https://github.com/user-attachments/assets/3b98ca0e-44d0-4683-8bd4-85b3e3a22c2b" />
+<img width="1390" height="765" alt="Screenshot 2025-11-04 102951" src="https://github.com/user-attachments/assets/444e2082-8e53-49de-8121-893479985c7b" />
+<img width="1480" height="901" alt="Screenshot 2025-11-04 102924" src="https://github.com/user-attachments/assets/1a654dfc-89c7-4d64-a83e-aa92554eee02" />
+<img width="1349" height="905" alt="Screenshot 2025-11-04 102753" src="https://github.com/user-attachments/assets/5798364f-d516-4204-b195-750388f758d8" />
+<img width="1303" height="857" alt="Screenshot 2025-11-04 103022" src="https://github.com/user-attachments/assets/9b6649e3-5ef4-4fd0-ad29-fde496ab232c" />
+<img width="572" height="446" alt="Screenshot 2025-11-04 103515" src="https://github.com/user-attachments/assets/1c971bf0-41a5-4db4-9220-5674795a649f" />
+<img width="561" height="591" alt="Screenshot 2025-11-04 103319" src="https://github.com/user-attachments/assets/d41bae7c-c5a4-491e-89f9-47925ea8a0d8" />
+
+
+# MERN-ecommerce
 
 ```bash
 npx json-server data.json --port 5000
+
 ```
 
 ### complete frontend code using json-server download Commits on Sep 7, 2024 and start json server using above command
